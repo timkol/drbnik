@@ -7,11 +7,15 @@ class GossipManager extends Nette\Object
 {
     /** @var Nette\Database\Context */
     private $database;
+    
+    /** @var Nette\Security\User */
+    private $user;
 
 
-    public function __construct(Nette\Database\Context $database)
+    public function __construct(Nette\Database\Context $database, Nette\Security\User $user)
     {
 	$this->database = $database;
+        $this->user = $user;
     }
     
     /**
@@ -25,7 +29,12 @@ class GossipManager extends Nette\Object
         
         $gossipInsert = $this->database->table('gossip')->insert(array(
             'gossip' => $gossip,
-            'status_id' => $statusNew->status_id
+            //'status_id' => $statusNew->status_id
+        ));
+        $this->database->table('gossip_history')->insert(array(
+            'gossip_id' => $gossipInsert->gossip_id,
+            'status_id' => $statusNew->status_id,
+            'login_id' => $this->user->id, //TODO logged out
         ));
         foreach ($authors as $author) {
             $this->database->table('gossip_author')->insert(array(
@@ -48,9 +57,15 @@ class GossipManager extends Nette\Object
         
         $statusRow = $this->database->table('status')->where('name', $status)->fetch();
         
-        $this->database->table('gossip')->where('gossip_id', $gossipId)->update(array(
+        $this->database->table('gossip_history')->insert(array(
+            'gossip_id' => $gossipId,
             'status_id' => $statusRow->status_id,
+            'login_id' => $this->user->id,
         ));
+        
+//        $this->database->table('gossip')->where('gossip_id', $gossipId)->update(array(
+//            'status_id' => $statusRow->status_id,
+//        ));
     }
     
     /**
@@ -59,6 +74,7 @@ class GossipManager extends Nette\Object
      * @return \Nette\Database\Table\ActiveRow
      */
     public function getByStatus($status = null) {
-        return $this->database->table('gossip')->where('status.name', $status);
+        $statusRow = $this->database->table('status')->where('name', $status)->fetch();
+        return $this->database->table('v_gossip_status')->where('status_id', $statusRow->status_id);
     }
 }
