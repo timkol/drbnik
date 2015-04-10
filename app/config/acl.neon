@@ -1,0 +1,20 @@
+services:
+    tokenAssertion: App\Model\Authorization\TokenAssertion
+
+    acl:
+        class: Nette\Security\Permission
+        setup:
+            #Roles
+            - addRole(guest)
+            - addRole(authenticated, guest)
+            - addRole(org)
+            - addRole(admin, org)
+
+            #Resources
+            - addResource(gossip) #add, edit, approve
+            - addResource(person) #add, edit, remove
+
+            #ACL
+            - allow(org, gossip)
+            - allow(admin, person)
+            - allow(guest, gossip, add, [@tokenAssertion, 'isCooledDown'])
