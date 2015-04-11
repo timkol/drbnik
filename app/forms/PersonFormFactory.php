@@ -46,7 +46,7 @@ class PersonFormFactory extends BaseFormFactory
         try {
             $this->authenticator->add($values->login, $values->password);
         } catch (\Exception $ex) {
-            $form->addError('Duplicitní jméno.');
+            $form->addError($ex->getMessage());
         }
     }
     
@@ -79,7 +79,7 @@ class PersonFormFactory extends BaseFormFactory
             $this->authenticator->editMyself($this->user, $values->passwordOld, $values->login, $values->passwordNew);
         } 
         catch (\App\Model\Authentication\DuplicateNameException $ex) {
-            $form->addError('Duplicitní jméno.');
+            $form->addError($ex->getMessage());
         }
         catch (\Nette\Security\AuthenticationException $ex) {
             $form->addError($ex->getMessage());
