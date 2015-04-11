@@ -1,0 +1,52 @@
+{block head}
+    <link rel="stylesheet/less" type="text/css" charset="UTF-8" href="{$basePath}/css/style.less" />
+{/block}
+
+{block content}
+    <div class="drb_request">
+{/block}
+
+{block #scripts}
+    {include #parent}
+    <script src="{$basePath}/js/less.js" type="text/javascript" charset="UTF-8"></script>
+        <script src="http://code.jquery.com/jquery-1.9.1.js" charset="UTF-8" type="text/javascript" ></script>
+        <script charset="UTF-8" n:syntax="off">
+            jQuery(function () {
+                var $ = jQuery;
+                var speed = 12000;
+                function _next_drb(speed) {
+                    $.post("ajax/drby.php", {}, function (data) {
+                        console.log(data);
+                        $(".drb_request").append(data['html']);
+
+                        _animate_drb(speed);
+                        window.setTimeout(function () {
+                            _next_drb(speed);
+                        }, data['chars'] * 30);
+                    }, "json");
+                }
+                function _animate_drb(speed) {
+                    var display_height = $(window).height();
+                    $('.drb span').each(function () {
+                        var sigma = .15;
+                        var rand = Math.random();
+                        $(this).css({position: 'relative', top: -display_height * (1 + sigma * rand)});
+
+
+                        $(this).animate({top: display_height * (1 + sigma * rand)}, 7 * speed, "linear", function () {
+                            $(this).remove();
+                        });
+                    });
+                }
+
+
+                $(window).load(function () {
+
+                    _next_drb(speed);
+
+
+                });
+            });
+
+        </script>
+{/block}
