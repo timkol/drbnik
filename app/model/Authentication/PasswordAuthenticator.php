@@ -123,4 +123,6 @@ class PasswordAuthenticator extends Nette\Object implements IAuthenticator
 
 
 class DuplicateNameException extends \Exception
-{}
+{
+    protected $message = "Duplicitní jméno.";
+}
