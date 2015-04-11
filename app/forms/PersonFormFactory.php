@@ -40,7 +40,7 @@ class PersonFormFactory extends Nette\Object
     
     public function addPersonFormSucceeded(Form $form, $values) {
         if (!$this->user->isAllowed('person', 'add')) {
-            $form->getPresenter()->error('Nemáte dostatečná oprávnění pro registraci uživatele.', \Nette\Http\IResponse::S401_UNAUTHORIZED);
+            $form->getPresenter()->error('Nemáte dostatečná oprávnění pro registraci uživatele.', \Nette\Http\IResponse::S403_FORBIDDEN);
         }
         
         try {
@@ -72,7 +72,7 @@ class PersonFormFactory extends Nette\Object
     
     public function editMyselfFormSucceeded(Form $form, $values) {
         if (!$this->user->isLoggedIn()) {
-            $form->getPresenter()->error('Nejprve se přihlašte.', \Nette\Http\IResponse::S401_UNAUTHORIZED);
+            $form->getPresenter()->error('Nejprve se přihlašte.', \Nette\Http\IResponse::S403_FORBIDDEN);
         }
         
         try {
