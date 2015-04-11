@@ -12,6 +12,12 @@ and open the template in the editor.
 @background_color :#000000 ;
 
 @font_color : #00ff00;
+@font_color_hover: #33ff33;
+
+
+
+
+@import "bootstrap.min.less";
 
 @media screen {
     *{
@@ -19,7 +25,7 @@ and open the template in the editor.
     }
     body{
         font-family: monospace;
-        font-size: 25px;
+
         width: 100%;
         background-color: @background_color;
         color: @font_color;
@@ -32,7 +38,7 @@ and open the template in the editor.
             top:0;
             padding-left: .2em;
             text-shadow: 0 -.2em 1em  @font_color;
-
+            font-size: 25px;
         }
     }
 
@@ -41,6 +47,75 @@ and open the template in the editor.
         margin-right: auto;
         width: 40em;
     }
+
+
+    .form_pair{
+        padding-left:1em;
+        padding-right: 1em;
+        height:100%;
+
+
+        &:nth-child(2){
+            width: 25%;
+            float:right;
+        }
+
+        &:nth-child(1){
+            width:25%;
+            float:left;
+        }
+        //textarea 
+        &:nth-child(3){
+            width: 50%;
+            float:left;
+        }
+
+    }
+    .form_control{
+        // .form-control;
+        height: 100%;
+        text-align: center;
+    }
+    button,.button{
+        .btn;
+        color:@background_color;
+        background-color: @font_color;
+
+    }
+    .reset{
+        .btn;
+        color:@font_color;
+        background-color: @background_color;
+        border-color: @font_color;
+    }
+
+    select{
+        overflow:visible;
+        height: 100%!important;
+        .form-control;
+
+        
+
+    }
+    textarea{
+        .form-control;
+        width: 100%;
+
+    }
+
+    select,textarea{
+        border-color:@font_color;
+        color:@font_color;
+
+        background-color: transparent;
+        &:hover,&:focus,&:active{
+            border-color:@font_color_hover;
+            color:@font_color_hover;
+        }
+    }
+
+
+
 
 
 }

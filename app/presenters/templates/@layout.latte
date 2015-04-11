@@ -4,30 +4,40 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>{ifset title}{include title|striptags} | {/ifset}Drbník</title>
+        <title>{ifset title}{include title|striptags} | {/ifset}Drbník</title>
 
-	{*<link rel="stylesheet" href="{$basePath}/css/style.css">*}
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
-	{block head}{/block}
-</head>
+        {*<link rel="stylesheet" href="{$basePath}/css/style.css">*}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" />
+        <link rel="shortcut icon" href="{$basePath}/favicon.ico" /> 
+        <link rel="stylesheet/less" href="{$basePath}/css/bootstrap.min.less" />
+        <link rel="stylesheet/less" type="text/css" charset="UTF-8" href="{$basePath}/css/style.less" />
+        <script src="{$basePath}/js/less.js" type="text/javascript" charset="UTF-8"></script>
+       
+        {block head}{/block}
+    </head>
 
-<body role="document">
-    
+    <body role="document">
+
         {if $user->loggedIn}
             {include 'menu.latte'}
         {/if}
-        
-	<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}" role="alert">{$flash->message}</div>
-        
-	{include content}
 
-	{block scripts}
-	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-	<script src="//nette.github.io/resources/js/netteForms.min.js"></script>
+        <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}" role="alert">{$flash->message}</div>
+
+        {include content}
+
+        
+        {block scripts}
+        
+        <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+        <script src="//nette.github.io/resources/js/netteForms.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	{*<script src="{$basePath}/js/main.js"></script>*}
-	{/block}
-</body>
+
+        <script src="http://code.jquery.com/jquery-1.9.1.js" charset="UTF-8" type="text/javascript" ></script>
+        
+         <script src="{$basePath}/js/main.js" type="text/javascript" charset="UTF-8"></script>
+        {*<script src="{$basePath}/js/main.js"></script>*}
+        {/block}
+    </body>
 </html>

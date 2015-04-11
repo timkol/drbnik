@@ -37,13 +37,17 @@ class GossipFormFactory extends Nette\Object
         
         $form = new Form;
         $form->addMultiSelect('authors', 'Autoři:', $persons)
-                ->setRequired('Musí být vyplněn alespoň jeden autor.');
+                ->setRequired('Musí být vyplněn alespoň jeden autor.')
+                ->setAttribute('class','authors');
+        
         $form->addMultiSelect('victims', 'Oběti:', $persons)
-                ->setRequired('Musí být vyplněna alespoň jedna oběť.');
+                ->setRequired('Musí být vyplněna alespoň jedna oběť.')
+                 ->setAttribute('class','victims');
         $form->addTextArea('gossip', 'Text drbu:')
                 ->addRule(Form::MAX_LENGTH, 'Text drbu smí být dlouhý maximálně %d znaků.', 65535)
-                ->setRequired('Text drbu nesmí být prázdný');
+                ->setRequired('Text drbu nesmí být prázdný')->setAttribute('placeholder','Zde napíš text drbu.');
         $form->addSubmit('submit', 'Odeslat');
+        $form->addButton('null','původní hodnoty')->setAttribute('type', 'reset')->setAttribute('class','reset');
         $form->onSuccess[] = array($this, 'gossipFormSucceeded');
         return $form;
     }
