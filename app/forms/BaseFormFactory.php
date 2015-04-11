@@ -3,13 +3,12 @@
 namespace App\Forms;
 
 use Nette,
-	Nette\Application\UI\Form,
-	Nette\Security\User;
+	Nette\Application\UI\Form;
 
 
 abstract class BaseFormFactory extends Nette\Object
 {
-    public function create() {
+    protected function create() {
         $form = new Form;
         $form->setRenderer(new \App\Forms\Rendering\DrbnikFormRenderer());
         return $form;
