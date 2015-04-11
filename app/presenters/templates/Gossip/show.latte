@@ -1,55 +1,63 @@
 {block head}
-    <link rel="stylesheet/less" type="text/css" charset="UTF-8" href="{$basePath}/css/style.less" />
+
 {/block}
 
 {block content}
-    <div class="drb_request">
-{/block}
+<div class="drb_request">
+    {/block}
 
-{block #scripts}
+    {block scripts}
     {include #parent}
-    <script src="{$basePath}/js/less.js" type="text/javascript" charset="UTF-8"></script>
-        <script src="http://code.jquery.com/jquery-1.9.1.js" charset="UTF-8" type="text/javascript" ></script>
-        <script charset="UTF-8" type="text/javascript" >
+    
+    <script charset="UTF-8" type="text/javascript" >
             var ajaxURL = {link Gossip:ajax};
-        </script>
-        <script charset="UTF-8" n:syntax="off">
-            jQuery(function () {
-                var $ = jQuery;
-                var speed = 6000;
-                function _next_drb(speed) {
-                    $.post(ajaxURL, {}, function (data) {
-                        console.log(data);
-                        $(".drb_request").append(data['html']);
+    </script>
+    <script charset="UTF-8" n:syntax="off">
+        jQuery(function () {
+            var $ = jQuery;
 
-                        _animate_drb(speed);
-                        window.setTimeout(function () {
-                            _next_drb(speed);
-                        }, data['chars'] * 30);
-                    }, "json");
-                }
-                function _animate_drb(speed) {
-                    var display_height = $(window).height();
-                    $('.drb span').each(function () {
-                        var sigma = .15;
-                        var rand = Math.random();
-                        $(this).css({position: 'relative', top: 0.1*(-display_height * (1 + sigma * rand))});
+            var sigma = .15;
+            var line = 60;
+            var next = 35;
+            var start = -.1;
+            var speed = 6000 * ((-start) + 1);
+
+            function _next_drb(speed, next_drb) {
+                $.get(ajaxURL, {id: next_drb}, function (data) {
+
+                    $(".drb_request").append(data['html']);
+
+                    _animate_drb(speed);
+                    window.setTimeout(function () {
+                        _next_drb(speed, data['id']);
+                       
+                    }, (Math.floor(data['html'].length / (14*line)) + 1) * next * line);
+                }, "json");
+
+            }
+            function _animate_drb(speed) {
+                var display_height = $(window).height();
+                $('.drb span').each(function () {
+                    var rand = Math.random();
+                    var height_rand = display_height * (1 + sigma * rand);
+
+                    $(this).css({position: 'relative', top: start * height_rand});
 
 
-                        $(this).animate({top: display_height * (1 + sigma * rand)}, 7 * speed, "linear", function () {
-                            $(this).remove();
-                        });
+                    $(this).animate({top: height_rand}, 7 * speed, "linear", function () {
+                        $(this).remove();
                     });
-                }
-
-
-                $(window).load(function () {
-
-                    _next_drb(speed);
-
-
                 });
-            });
+            }
 
-        </script>
-{/block}
+
+            $(window).one("load", function () {
+
+                _next_drb(speed, 0);
+
+
+            });
+        });
+
+    </script>
+    {/block}
