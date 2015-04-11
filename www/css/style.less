@@ -7,21 +7,15 @@ and open the template in the editor.
     Created on : Apr 10, 2015, 8:03:09 PM
     Author     : miso
 */
-
-
-@background_color :#000000 ;
-
-@font_color : #00ff00;
-@font_color_hover: #33ff33;
-
-
-
-
 @import "bootstrap.min.less";
 
-@media screen {
-    *{
+@import "colors.less";
 
+
+@media screen,projection {
+    *{
+        margin:0;
+        padding: 0;
     }
     body{
         font-family: monospace;
@@ -94,7 +88,7 @@ and open the template in the editor.
         height: 100%!important;
         .form-control;
 
-        
+
 
     }
     textarea{
@@ -113,10 +107,6 @@ and open the template in the editor.
             color:@font_color_hover;
         }
     }
-
-
-
-
 
 }
 
