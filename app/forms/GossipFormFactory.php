@@ -10,7 +10,7 @@ use App\Model\GossipManager;
 use Nette\Database\Context;
 
 
-class GossipFormFactory extends Nette\Object
+class GossipFormFactory extends BaseFormFactory
 {
     /** @var User */
     private $user;
@@ -35,7 +35,7 @@ class GossipFormFactory extends Nette\Object
     public function createGossipForm() {
         $persons = $this->createPersonList();
         
-        $form = new Form;
+        $form = parent::create();
         $form->addMultiSelect('authors', 'Autoři:', $persons)
                 ->setRequired('Musí být vyplněn alespoň jeden autor.')
                 ->setAttribute('class','authors');
@@ -72,7 +72,7 @@ class GossipFormFactory extends Nette\Object
     }
     
     public function createApproveForm() {
-        $form = new Form;
+        $form = parent::create();
         $options = array(
             'approved' => 'Schválit',
             'rejected' => 'Zamítnout',

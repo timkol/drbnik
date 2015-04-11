@@ -5,17 +5,18 @@
  * Copyright (c) 2004 David Grudl (http://davidgrudl.com)
  */
 
-namespace Nette\Forms\Rendering;
+namespace App\Forms\Rendering;
 
 use Nette,
     Nette\Utils\Html;
+use Nette\Forms\Rendering;
 
 /**
  * Converts a Form into the HTML output.
  *
  * @author     David Grudl
  */
-class DrbnikDefaultFormRenderer extends DefaultFormRenderer {
+class DrbnikFormRenderer extends Rendering\DefaultFormRenderer {
 
     /**
      *  /--- form.container

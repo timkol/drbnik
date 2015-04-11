@@ -7,7 +7,7 @@ use Nette,
 	Nette\Security\User;
 
 
-class SignFormFactory extends Nette\Object
+class SignFormFactory extends BaseFormFactory
 {
 	/** @var User */
 	private $user;
@@ -24,7 +24,7 @@ class SignFormFactory extends Nette\Object
 	 */
 	public function create()
 	{
-		$form = new BaseForm;
+		$form = parent::create();
 		$form->addText('username', 'Username:')
 			->setRequired('Please enter your username.');
 
@@ -34,9 +34,9 @@ class SignFormFactory extends Nette\Object
 		$form->addCheckbox('remember', 'Keep me signed in');
 
 		$form->addSubmit('send', 'Sign in');
+                $form->addProtection('Vypršel časový limit, odešlete formulář znovu.');
 
 		$form->onSuccess[] = array($this, 'formSucceeded');
-                $form->postAdd();
 		return $form;
 	}
 

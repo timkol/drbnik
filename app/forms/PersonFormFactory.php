@@ -8,7 +8,7 @@ use Nette,
 use App\Model\Authentication\PasswordAuthenticator;
 
 
-class PersonFormFactory extends Nette\Object
+class PersonFormFactory extends BaseFormFactory
 {
     /** @var User */
     private $user;
@@ -27,7 +27,7 @@ class PersonFormFactory extends Nette\Object
      * @return Form
      */
     public function createAddPersonForm() {        
-        $form = new Form;
+        $form = parent::create();
         $form->addText('login', 'Login:')
                 ->setRequired('Přihlašovací jméno je povinné.');
         $form->addPassword('password', 'Heslo:')
@@ -54,7 +54,7 @@ class PersonFormFactory extends Nette\Object
     * @return Form
     */
     public function createEditMyselfForm() {        
-        $form = new Form;
+        $form = parent::create();
         $form->addText('login', 'Login:')
                 ->setRequired('Přihlašovací jméno je povinné.')
                 ->setDefaultValue($this->user->getIdentity()->data['login']);        
