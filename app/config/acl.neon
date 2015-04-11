@@ -1,5 +1,6 @@
 services:
     tokenAssertion: App\Model\Authorization\TokenAssertion
+    gossipPoolAssertion: App\Model\Authorization\GossipPoolAssertion
 
     acl:
         class: Nette\Security\Permission
@@ -17,4 +18,5 @@ services:
             #ACL
             - allow(org, gossip)
             - allow(admin, person)
-            - allow(guest, gossip, add, [@tokenAssertion, 'isCooledDown'])
+            #- allow(guest, gossip, add, [@tokenAssertion, 'isCooledDown'])
+            - allow(authenticated, gossip, add, [@gossipPoolAssertion, 'canAdd'])

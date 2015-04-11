@@ -55,7 +55,7 @@ class GossipFormFactory extends Nette\Object
     public function gossipFormSucceeded(Form $form, $values)
     {
         if (!$this->user->isAllowed('gossip', 'add')) {
-            $form->getPresenter()->error('Nemáte oprávnění pro přidání drbu.', \Nette\Http\IResponse::S401_UNAUTHORIZED);
+            $form->getPresenter()->error('Nemáte oprávnění pro přidání drbu.', \Nette\Http\IResponse::S403_FORBIDDEN);
         }
         $this->token->generateToken();
         
@@ -90,7 +90,7 @@ class GossipFormFactory extends Nette\Object
     
     public function approveFormSucceeded(Form $form, $values) {
         if (!$this->user->isAllowed('gossip', 'approve')) {
-            $form->getPresenter()->error('Nemáte oprávnění pro schvalování drbů.', \Nette\Http\IResponse::S401_UNAUTHORIZED);
+            $form->getPresenter()->error('Nemáte oprávnění pro schvalování drbů.', \Nette\Http\IResponse::S403_FORBIDDEN);
         }
         
         foreach($values as $gossipId => $status) {

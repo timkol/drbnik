@@ -19,4 +19,9 @@ $configurator->addConfig(__DIR__ . '/config/config.local.neon');
 
 $container = $configurator->createContainer();
 
+/* hodne velka prasarna */
+$authorizator = $container->getService('gossipPoolAssertion');
+$user = $container->getService('user');
+$authorizator->setUser($user);
+
 return $container;

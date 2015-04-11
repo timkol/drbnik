@@ -46,7 +46,7 @@ class GossipPresenter extends BasePresenter
     
     public function actionApprove(){
         if (!$this->getUser()->isAllowed('gossip', 'approve')) {
-            $this->error('Nemáte oprávnění ke schvalování drbů', \Nette\Http\IResponse::S401_UNAUTHORIZED);
+            $this->error('Nemáte oprávnění ke schvalování drbů', \Nette\Http\IResponse::S403_FORBIDDEN);;
         }
     }
     
