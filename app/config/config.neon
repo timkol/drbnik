@@ -23,6 +23,7 @@ services:
         - App\Model\Authentication\PasswordAuthenticator
         - App\Model\GossipToken\GossipToken
         - App\Model\GossipManager
+        - App\Model\AnimatedGossip\AnimatedGossipFactory
         - App\Forms\SignFormFactory
         - App\Forms\PersonFormFactory
         - App\Forms\GossipFormFactory

@@ -9,6 +9,7 @@ use App\Model\GossipToken\GossipToken;
 use App\Forms\GossipFormFactory;
 use App\Model\GossipManager;
 use Nette\Application\Responses\JsonResponse;
+use App\Model\AnimatedGossip\AnimatedGossipFactory;
 
 /**
  * Gossip presenter.
@@ -26,6 +27,9 @@ class GossipPresenter extends BasePresenter
     
     /** @var GossipManager */
     private $model;
+    
+    /** @var AnimatedGossipFactory @inject */
+    public $aniGossFactory;
 
     public function __construct(Nette\Database\Context $database, GossipToken $token, GossipManager $model)
     {
@@ -67,13 +71,14 @@ class GossipPresenter extends BasePresenter
     public function actionAjax() {
         $drb= 'ahoj svet tu bude nejaký drb ktorý sa tam vykreslí!! a treba sem jebnut ešte nejaké dlašie pičoviny';
         
-        $new_drb = new \App\Model\drb_animate($drb);
+        $previousId = $this->request->getPost('id');
+        $new_drb = $this->aniGossFactory->create($previousId);
         $request = '<div class="drb">' . $new_drb->getParsed() . '</div>';
-        $char = $new_drb->getLength();
+        $id = $new_drb->getLength();
         
-        if($this->isAjax()) {
-            $this->sendResponse(new JsonResponse(array('html' => $request, 'chars' => $char)));
-        }
+        //if($this->isAjax()) {
+            $this->sendResponse(new JsonResponse(array('html' => $request, 'id' => $id)));
+        //}
     }
 
 }

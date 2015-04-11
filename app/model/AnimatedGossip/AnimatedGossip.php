@@ -1,18 +1,22 @@
 <?php
 
-namespace App\Model;
+namespace App\Model\AnimatedGossip;
 
 use Nette;
 use Nette\Utils\Strings;
 
-class drb_animate extends Nette\Object {
+class AnimatedGossip extends Nette\Object {
 
     private $gossip = "";
+    
+    private $id;
+    
     private $gossipChars = array();
     private $parsedGossip;
 
-    public function __construct($gossip) {
+    public function __construct($id, $gossip) {
         $this->gossip = $gossip;
+        $this->id = $id;
         $this->chopString();
         $this->parse();
     }
@@ -21,6 +25,10 @@ class drb_animate extends Nette\Object {
         return count($this->gossipChars);
     }
     
+    public function getId() {
+        return $this->id;
+    }
+
     public function getParsed() {
         return $this->parsedGossip;
     }
@@ -33,21 +41,6 @@ class drb_animate extends Nette\Object {
         foreach ($this->gossipChars as $char) {
             $this->parsedGossip .= '<span>'.$char.'</span>';
         }
-    }
-
-//    public function parse_drb() {
-//        $this->parsed_drb = str_split($this->drb);
-//        return $this->parsed_drb;
-//    }
-//    
-//    public function split_drb(){
-//        $r='';
-//        foreach ($this->parsed_drb as $value){
-//            $r.='<span>'.$value.'</span>';
-//        }
-//        return $r;
-//        
-//    }
-    
+    }   
 
 }

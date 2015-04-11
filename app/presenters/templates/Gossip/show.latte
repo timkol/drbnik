@@ -10,12 +10,15 @@
     {include #parent}
     <script src="{$basePath}/js/less.js" type="text/javascript" charset="UTF-8"></script>
         <script src="http://code.jquery.com/jquery-1.9.1.js" charset="UTF-8" type="text/javascript" ></script>
+        <script charset="UTF-8" type="text/javascript" >
+            var ajaxURL = {link Gossip:ajax};
+        </script>
         <script charset="UTF-8" n:syntax="off">
             jQuery(function () {
                 var $ = jQuery;
-                var speed = 12000;
+                var speed = 6000;
                 function _next_drb(speed) {
-                    $.post("ajax/drby.php", {}, function (data) {
+                    $.post(ajaxURL, {}, function (data) {
                         console.log(data);
                         $(".drb_request").append(data['html']);
 
@@ -30,7 +33,7 @@
                     $('.drb span').each(function () {
                         var sigma = .15;
                         var rand = Math.random();
-                        $(this).css({position: 'relative', top: -display_height * (1 + sigma * rand)});
+                        $(this).css({position: 'relative', top: 0.1*(-display_height * (1 + sigma * rand))});
 
 
                         $(this).animate({top: display_height * (1 + sigma * rand)}, 7 * speed, "linear", function () {
