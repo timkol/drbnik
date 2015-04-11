@@ -7,9 +7,18 @@ and open the template in the editor.
     Created on : Apr 10, 2015, 8:03:09 PM
     Author     : miso
 */
-@import "bootstrap.min.less";
+@import "./bootstrap.min.less";
 
-@import "colors.less";
+
+
+@import "./colors.less";
+
+
+
+
+
+
+
 
 
 @media screen,projection {
@@ -42,29 +51,31 @@ and open the template in the editor.
         width: 40em;
     }
 
+    .gossipForm{
+        .form_pair{
+            padding-left:1em;
+            padding-right: 1em;
+            height:100%;
 
-    .form_pair{
-        padding-left:1em;
-        padding-right: 1em;
-        height:100%;
 
+            &:nth-child(2){
+                width: 25%;
+                float:right;
+            }
 
-        &:nth-child(2){
-            width: 25%;
-            float:right;
+            &:nth-child(1){
+                width:25%;
+                float:left;
+            }
+            //textarea 
+            &:nth-child(3){
+                width: 50%;
+                float:left;
+            }
+
         }
-
-        &:nth-child(1){
-            width:25%;
-            float:left;
-        }
-        //textarea 
-        &:nth-child(3){
-            width: 50%;
-            float:left;
-        }
-
     }
+
     .form_control{
         // .form-control;
         height: 100%;
@@ -75,6 +86,19 @@ and open the template in the editor.
         color:@background_color;
         background-color: @font_color;
 
+    }
+    .login{
+        width: 30%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    input.text{
+        
+        .form-control;
+        background-color: transparent;
+        border-color:  @font_color;
+        color: @font_color;
+        
     }
     .reset{
         .btn;
