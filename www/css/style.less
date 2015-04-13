@@ -7,8 +7,8 @@ and open the template in the editor.
     Created on : Apr 10, 2015, 8:03:09 PM
     Author     : miso
 */
-@import "./bootstrap.min.less";
-
+/*@import "./bootstrap.min.less";
+*/
 
 
 @import "./colors.less";
@@ -82,7 +82,7 @@ and open the template in the editor.
         text-align: center;
     }
     button,.button{
-        .btn;
+        //.btn;
         color:@background_color;
         background-color: @font_color;
 
@@ -94,14 +94,14 @@ and open the template in the editor.
     }
     input.text{
         
-        .form-control;
+        //.form-control;
         background-color: transparent;
         border-color:  @font_color;
         color: @font_color;
         
     }
     .reset{
-        .btn;
+        //.btn;
         color:@font_color;
         background-color: @background_color;
         border-color: @font_color;
@@ -110,18 +110,18 @@ and open the template in the editor.
     select{
         overflow:visible;
         height: 100%!important;
-        .form-control;
+        //.form-control;
 
 
 
     }
     textarea{
-        .form-control;
+        //.form-control;
         width: 100%;
 
     }
 
-    select,textarea{
+    select.form-control,textarea.form-control{
         border-color:@font_color;
         color:@font_color;
 
