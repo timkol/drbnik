@@ -45,9 +45,13 @@ class GossipFormFactory extends BaseFormFactory
                  ->setAttribute('class','victims');
         $form->addTextArea('gossip', 'Text drbu:')
                 ->addRule(Form::MAX_LENGTH, 'Text drbu smí být dlouhý maximálně %d znaků.', 65535)
-                ->setRequired('Text drbu nesmí být prázdný')->setAttribute('placeholder','Zde napíš text drbu.');
+                ->setRequired('Text drbu nesmí být prázdný')
+                ->setAttribute('placeholder', 'Zde napiš text drbu.');
         $form->addSubmit('submit', 'Odeslat');
-        $form->addButton('null','původní hodnoty')->setAttribute('type', 'reset')->setAttribute('class','reset');
+        $form->addButton('null','původní hodnoty')
+                ->setAttribute('type', 'reset')
+                ->setAttribute('class','reset');
+        $form->addProtection('Vypršel časový limit, odešlete formulář znovu.');
         $form->onSuccess[] = array($this, 'gossipFormSucceeded');
         return $form;
     }
@@ -63,11 +67,25 @@ class GossipFormFactory extends BaseFormFactory
     }
     
     private function createPersonList() {
+        $types = array(
+            'pako' => 'Účastníci',
+            'org' => 'Organizátoři',
+            'visit' => 'Návštěva',
+        );
         $persons = array();
-        $person_query = $this->database->table('person');
-        foreach ($person_query as $person) {
-            $persons[$person->person_id] = $person->display_name;
-        }
+        
+        foreach ($types as $personType => $personGroup) {
+            $persQuery = $this->database->table('person')->where('person_type', $personType);
+            $pers = array();
+            foreach ($persQuery as $person) {
+                $name = $person->display_name;
+                if($name === null) {
+                    $name = $person->other_name .' '. $person->family_name;
+                }
+                $pers[$person->person_id] = $name;
+            }
+            $persons[$personGroup] = $pers;
+        }        
         return $persons;
     }
     

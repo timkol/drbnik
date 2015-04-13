@@ -8,15 +8,18 @@ services:
             #Roles
             - addRole(guest)
             - addRole(authenticated, guest)
-            - addRole(org)
+            - addRole(org, authenticated)
             - addRole(admin, org)
 
             #Resources
-            - addResource(gossip) #add, edit, approve
-            - addResource(person) #add, edit, remove
+            - addResource(gossip) #displayForm, add, edit, approve, show
+            - addResource(person) #add, edit, editMyself
 
             #ACL
-            - allow(org, gossip)
-            - allow(admin, person)
             #- allow(guest, gossip, add, [@tokenAssertion, 'isCooledDown'])
+            - allow(authenticated, person, editMyself)
+            - allow(authenticated, gossip, displayForm)
             - allow(authenticated, gossip, add, [@gossipPoolAssertion, 'canAdd'])
+
+            - allow(org, gossip)
+            - allow(admin, Nette\Security\Permission::ALL)

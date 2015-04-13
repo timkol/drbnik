@@ -28,7 +28,7 @@ class PersonPresenter extends BasePresenter
     
     public function actionEditMyself()
     {
-        if (!$this->getUser()->isLoggedIn()) {
+        if (!$this->getUser()->isAllowed('person', 'editMyself')) {
             $this->redirect('Sign:in');
         }
     }
@@ -46,7 +46,7 @@ class PersonPresenter extends BasePresenter
         $form = $this->factory->createEditMyselfForm();
 	$form->onSuccess[] = function ($form) {
             $form->getPresenter()->flashMessage('Údaje byly změněny.', 'success');
-            $form->getPresenter()->redirect('Homepage:');
+            $form->getPresenter()->redirect('Gossip:');
 	};
 	return $form;
     }

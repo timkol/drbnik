@@ -39,14 +39,20 @@ class GossipPresenter extends BasePresenter
         $this->model = $model;
     }    
 
-    public function renderDefault()
-    {
-        $this->template->remainingCD = $this->token->getRemainingCooldown()->format('%R %i:%s');
-    }
+//    public function renderDefault()
+//    {
+//        $this->template->remainingCD = $this->token->getRemainingCooldown()->format('%R %i:%s');
+//    }
     
+    public function actionDefault() {
+        if (!$this->getUser()->isAllowed('gossip', 'displayForm')) {
+            $this->redirect('Sign:in');
+        }
+    }
+
     public function actionApprove(){
         if (!$this->getUser()->isAllowed('gossip', 'approve')) {
-            $this->error('Nemáte oprávnění ke schvalování drbů', \Nette\Http\IResponse::S403_FORBIDDEN);;
+            $this->error('Nemáte oprávnění ke schvalování drbů.', \Nette\Http\IResponse::S403_FORBIDDEN);
         }
     }
     
@@ -69,16 +75,17 @@ class GossipPresenter extends BasePresenter
     }
     
     public function actionAjax() {
-        $drb= 'ahoj svet tu bude nejaký drb ktorý sa tam vykreslí!! a treba sem jebnut ešte nejaké dlašie pičoviny';
-        
+        if (!$this->getUser()->isAllowed('gossip', 'show')) {
+            $this->error('Nemáte oprávnění k prohlížení drbů.', \Nette\Http\IResponse::S403_FORBIDDEN);
+        }
         $previousId = $this->request->getPost('id');
         $new_drb = $this->aniGossFactory->create($previousId);
         $request = '<div class="drb">' . $new_drb->getParsed() . '</div>';
         $id = $new_drb->getLength();
         
-        //if($this->isAjax()) {
+        if($this->isAjax()) {
             $this->sendResponse(new JsonResponse(array('html' => $request, 'id' => $id)));
-        //}
+        }
     }
 
 }

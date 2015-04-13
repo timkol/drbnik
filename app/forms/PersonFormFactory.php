@@ -71,7 +71,7 @@ class PersonFormFactory extends BaseFormFactory
     }
     
     public function editMyselfFormSucceeded(Form $form, $values) {
-        if (!$this->user->isLoggedIn()) {
+        if (!$this->user->isAllowed('person', 'editMyself')) {
             $form->getPresenter()->error('Nejprve se přihlašte.', \Nette\Http\IResponse::S403_FORBIDDEN);
         }
         
