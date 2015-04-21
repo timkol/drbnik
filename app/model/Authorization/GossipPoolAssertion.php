@@ -67,6 +67,9 @@ class GossipPoolAssertion
                 case 'rejected':
                     $this->rejectedPolicy();
                     break;
+                case 'duplicit':
+                    $this->duplicitPolicy();
+                    break;
                 default:
                     break;
             }
@@ -107,5 +110,9 @@ class GossipPoolAssertion
     
     private function newPolicy() {
         $this->offset += 1*60;
+    }
+    
+    private function duplicitPolicy() {
+        $this->newPolicy();
     }
 }

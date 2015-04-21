@@ -94,6 +94,7 @@ class GossipFormFactory extends BaseFormFactory
         $options = array(
             'approved' => 'Schválit',
             'rejected' => 'Zamítnout',
+            'duplicit' => 'Duplicitní',
         );
         
         $gossips = $this->manager->getByStatus('new');
