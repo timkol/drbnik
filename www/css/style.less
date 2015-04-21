@@ -9,17 +9,7 @@ and open the template in the editor.
 */
 /*@import "./bootstrap.min.less";
 */
-
-
 @import "./colors.less";
-
-
-
-
-
-
-
-
 
 @media screen,projection {
     *{
@@ -81,12 +71,31 @@ and open the template in the editor.
         height: 100%;
         text-align: center;
     }
-/*    button,.button{
-        //.btn;
+    
+    .navbar{
+        background-color: @background_color;
+        background-image: none;
+        border-color: @background_color;
+    }
+    
+    .navbar .navbar-nav > li > a{
+        color: @font_color;
+        &:hover,&:focus,&:active{
+            color:@background_color;
+            background-color: @font_color;
+            border-color: @font_color;
+        }
+    }
+    
+    .navbar-default .navbar-nav > .active > a{
         color:@background_color;
         background-color: @font_color;
-
-    }*/
+        background-image: none;
+        &:hover,&:focus,&:active{
+            color:@background_color;
+            background-color: @font_color;
+        }
+    }
     
     .btn{
         color:@font_color;
@@ -118,18 +127,6 @@ and open the template in the editor.
         margin-left: auto;
         margin-right: auto;
     }
-/*    input.text{
-        background-color: transparent;
-        border-color:  @font_color;
-        color: @font_color;
-        
-    }*/
-/*    .reset{
-        //.btn;
-        color:@font_color;
-        background-color: @background_color;
-        border-color: @font_color;
-    }*/
 
     select{
         overflow:visible;
@@ -148,10 +145,6 @@ and open the template in the editor.
         &:hover,&:focus,&:active{
             border-color:@font_color_hover;
             color:@font_color_hover;
-        }
-        
-        &:focus{
-            
         }
     }
 
