@@ -38,6 +38,8 @@ class GossipFormFactory extends BaseFormFactory
         $form = parent::create();
         $form->addMultiSelect('authors', 'Autoři:', $persons)
                 ->setRequired('Musí být vyplněn alespoň jeden autor.')
+                ->setDefaultValue($this->getLoggedPersonId())
+                ->addRule(array($this, 'loggedAuthorFilledValidator'), 'Přihlášený člověk musí být autorem.', $this->getLoggedPersonId())
                 ->setAttribute('class','authors');
         
         $form->addMultiSelect('victims', 'Oběti:', $persons)
@@ -54,6 +56,10 @@ class GossipFormFactory extends BaseFormFactory
         $form->addProtection('Vypršel časový limit, odešlete formulář znovu.');
         $form->onSuccess[] = array($this, 'gossipFormSucceeded');
         return $form;
+    }
+    
+    public function loggedAuthorFilledValidator($item, $arg) {
+        return in_array($arg, $item->value);
     }
         
     public function gossipFormSucceeded(Form $form, $values)
@@ -89,9 +95,20 @@ class GossipFormFactory extends BaseFormFactory
         return $persons;
     }
     
+    private function getLoggedPersonId() {
+        $person = $this->database->table('person')->where(':login.login_id', $this->user->id)->fetch();
+        if(!$person) {
+            return null;
+        }
+        else {
+            return $person->person_id;
+        }
+    }
+    
     public function createApproveForm() {
         $form = parent::create();
         $options = array(
+            'new' => 'Ponechat neschválený',
             'approved' => 'Schválit',
             'rejected' => 'Zamítnout',
             'duplicit' => 'Duplicitní',
@@ -99,7 +116,8 @@ class GossipFormFactory extends BaseFormFactory
         
         $gossips = $this->manager->getByStatus('new');
         foreach($gossips as $gossip) {
-            $form->addRadioList($gossip->gossip_id, $gossip->gossip, $options);
+            $form->addRadioList($gossip->gossip_id, $gossip->gossip, $options)
+                ->setDefaultValue('new');
         }
         $form->addProtection('Vypršel časový limit, odešlete formulář znovu.');
         $form->addSubmit('submit', 'Odeslat');
@@ -113,6 +131,9 @@ class GossipFormFactory extends BaseFormFactory
         }
         
         foreach($values as $gossipId => $status) {
+            if($status === 'new') {
+                continue;
+            }
             $this->manager->changeStatus($gossipId, $status);
         }
     }
