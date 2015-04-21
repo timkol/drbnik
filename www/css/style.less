@@ -81,47 +81,66 @@ and open the template in the editor.
         height: 100%;
         text-align: center;
     }
-    button,.button{
+/*    button,.button{
         //.btn;
         color:@background_color;
         background-color: @font_color;
 
+    }*/
+    
+    .btn{
+        color:@font_color;
+        background-color: @background_color;
+        border-color: @font_color;        
+        background-image: none;
+        text-shadow: none;
+        
+        &:hover,&:focus,&:active{
+            color:@background_color;
+            background-color: @font_color;
+            border-color: @font_color;
+        }
     }
-    .login{
+    
+    .btn-primary{
+        color:@background_color;
+        background-color: @font_color;
+        
+        &:hover,&:focus,&:active{
+            color:@font_color;
+            background-color: @background_color;
+            border-color: @font_color;        
+        }
+    }
+    
+    .form-content{
         width: 30%;
         margin-left: auto;
         margin-right: auto;
     }
-    input.text{
-        
-        //.form-control;
+/*    input.text{
         background-color: transparent;
         border-color:  @font_color;
         color: @font_color;
         
-    }
-    .reset{
+    }*/
+/*    .reset{
         //.btn;
         color:@font_color;
         background-color: @background_color;
         border-color: @font_color;
-    }
+    }*/
 
     select{
         overflow:visible;
         height: 100%!important;
-        //.form-control;
-
-
-
     }
+    
     textarea{
-        //.form-control;
         width: 100%;
-
     }
 
-    select.form-control,textarea.form-control{
+    .form-control{
         border-color:@font_color;
         color:@font_color;
 
@@ -129,6 +148,10 @@ and open the template in the editor.
         &:hover,&:focus,&:active{
             border-color:@font_color_hover;
             color:@font_color_hover;
+        }
+        
+        &:focus{
+            
         }
     }
 

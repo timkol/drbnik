@@ -25,8 +25,13 @@
 
         <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}" role="alert">{$flash->message}</div>
 
-        {include content}
-
+        {ifset formContent}
+            <div class="form-content">
+                {include formContent}
+            </div>
+        {else}
+            {include content}
+        {/ifset}
         
         {block scripts}
         
