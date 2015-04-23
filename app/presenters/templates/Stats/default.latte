@@ -1,0 +1,10 @@
+{* Latte template *}
+
+{block formContent}
+<h1 n:block=title>Statistiky drbů</h1>
+<table>
+    <thead><tr><td>Status</td><td>Počet</td></tr></thead>
+{foreach $gossips as $name => $count}
+    <tr><td>{$name}</td><td>{$count}</td></tr>
+{/foreach}
+</table>

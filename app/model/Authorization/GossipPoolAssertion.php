@@ -40,14 +40,7 @@ class GossipPoolAssertion
      * @param type $privilege
      * @return type
      */
-    public function canAdd(Permission $acl, $role, $resourceId, $privilege) {
-//        $gossips = $this->database->query('SELECT s.name as status FROM v_gossip_status vs '
-//                . 'JOIN gossip_author a USING(gossip_id) '
-//                . 'JOIN login l ON l.person_id=a.author_id '
-//                . 'JOIN status s USING(status_id)'
-//                . 'WHERE l.login_id=? '
-//                . 'ORDER BY modified', $this->user->id);
-        
+    public function canAdd(Permission $acl, $role, $resourceId, $privilege) {        
         $gossips = $this->database->query('SELECT s.name as status FROM v_gossip_status vs '
                 . 'JOIN gossip_history h USING(gossip_id) '
                 . 'JOIN status s ON vs.status_id=s.status_id '
@@ -84,16 +77,9 @@ class GossipPoolAssertion
     }
     
     private function getCurrentWaitTime() {
-//        $newest = $this->database->table('gossip')
-//                ->where(':gossip_author.person:login.login_id', $this->user->id)
-//                ->order('inserted DESC')->fetch();
         $newest = $this->database->table('gossip_history')->where('status.name', 'new')
                 ->where('login_id', $this->user->id)->order('modified DESC')->fetch();
-//        $newest = $this->database->query('SELECT inserted FROM gossip '
-//                . 'JOIN gossip_author a USING(gossip_id) '
-//                . 'JOIN login l ON l.person_id=a.author_id '
-//                . 'WHERE login_id=? '
-//                . 'ORDER BY inserted DESC', $this->user->id)->fetch();
+        
         if(!$newest) {
             return 0;
         }

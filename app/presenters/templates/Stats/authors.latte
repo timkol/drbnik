@@ -1,0 +1,15 @@
+{* Latte template *}
+
+{block formContent}
+<h1 n:block=title>Statistiky autorů</h1>
+<table>
+    <thead><tr><td>Jméno</td><td>Celkem</td><td n:foreach="$options as $opt">{$opt}</td></tr></thead>
+{foreach $authors as $name => $data}
+    <tr>
+        <td>{$name}</td>
+        {foreach $data as $opt => $count}
+        <td>{$count}</td>
+        {/foreach}
+    </tr>
+{/foreach}
+</table>

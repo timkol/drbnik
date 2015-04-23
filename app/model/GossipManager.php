@@ -77,4 +77,32 @@ class GossipManager extends Nette\Object
         $statusRow = $this->database->table('status')->where('name', $status)->fetch();
         return $this->database->table('v_gossip_status')->where('status_id', $statusRow->status_id);
     }
+    
+    /**
+     * 
+     * @param string|null $status
+     * @return \Nette\Database\ResultSet
+     */
+    public function getByAuthor($author_id = null, $status = null) {
+        $statusRow = $this->database->table('status')->where('name', $status)->fetch();
+        $gossips = $this->database->query('SELECT vs.* FROM v_gossip_status vs '
+                . 'JOIN gossip_author ga USING(gossip_id) '
+                . 'WHERE ga.author_id = ? '
+                . 'AND vs.status_id = ? '
+                . 'ORDER BY vs.modified', $author_id, $statusRow->status_id);
+        return $gossips;
+    }
+    
+    /**
+     * 
+     * @param \Nette\Database\Table\ActiveRow $person
+     * @return string
+     */
+    public function getPersonDisplayName($person) {
+        $name = $person->display_name;
+        if($name === null) {
+            $name = $person->other_name .' '. $person->family_name;
+        }
+        return $name;
+    }
 }

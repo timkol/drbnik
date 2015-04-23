@@ -84,11 +84,12 @@ class GossipFormFactory extends BaseFormFactory
             $persQuery = $this->database->table('person')->where('person_type', $personType);
             $pers = array();
             foreach ($persQuery as $person) {
-                $name = $person->display_name;
-                if($name === null) {
-                    $name = $person->other_name .' '. $person->family_name;
-                }
-                $pers[$person->person_id] = $name;
+                
+//                $name = $person->display_name;
+//                if($name === null) {
+//                    $name = $person->other_name .' '. $person->family_name;
+//                }
+                $pers[$person->person_id] = $this->manager->getPersonDisplayName($person);
             }
             $persons[$personGroup] = $pers;
         }        
