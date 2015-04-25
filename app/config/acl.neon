@@ -14,6 +14,7 @@ services:
             #Resources
             - addResource(gossip) #displayForm, add, edit, approve, show
             - addResource(person) #add, edit, editMyself
+            - addResource(stats) #show
 
             #ACL
             #- allow(guest, gossip, add, [@tokenAssertion, 'isCooledDown'])

@@ -39,9 +39,9 @@ CREATE TABLE `gossip_history` (
   KEY `gossip_id` (`gossip_id`),
   KEY `status_id` (`status_id`),
   KEY `login_id` (`login_id`),
-  CONSTRAINT `gossip_history_ibfk_5` FOREIGN KEY (`login_id`) REFERENCES `login` (`login_id`),
   CONSTRAINT `gossip_history_ibfk_1` FOREIGN KEY (`gossip_id`) REFERENCES `gossip` (`gossip_id`),
-  CONSTRAINT `gossip_history_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`)
+  CONSTRAINT `gossip_history_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`),
+  CONSTRAINT `gossip_history_ibfk_5` FOREIGN KEY (`login_id`) REFERENCES `login` (`login_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -96,6 +96,7 @@ CREATE TABLE `person` (
   `other_name` varchar(255) COLLATE utf8_czech_ci NOT NULL COMMENT 'Křestní jména, von, de atd., oddělená jednou mezerou',
   `display_name` varchar(511) COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'zobrazované jméno, liší-li se od <other_name> <family_name>',
   `gender` enum('M','F') CHARACTER SET utf8 NOT NULL,
+  `person_type` enum('pako','org','visit') CHARACTER SET utf8 NOT NULL DEFAULT 'pako',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='řazení: <family_name><other_name>, zobrazení <other_name> <f';
@@ -109,6 +110,7 @@ CREATE TABLE `role` (
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
 DROP TABLE IF EXISTS `status`;
 CREATE TABLE `status` (
   `status_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -116,6 +118,7 @@ CREATE TABLE `status` (
   `description` text,
   PRIMARY KEY (`status_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 DROP TABLE IF EXISTS `token`;
 CREATE TABLE `token` (
@@ -130,4 +133,5 @@ CREATE TABLE `token` (
   CONSTRAINT `token_ibfk_1` FOREIGN KEY (`previous`) REFERENCES `token` (`token_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 2015-04-10 22:49:10
+
+-- 2015-04-25 08:13:49

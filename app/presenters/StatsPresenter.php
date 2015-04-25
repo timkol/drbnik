@@ -64,4 +64,16 @@ class StatsPresenter extends BasePresenter
             }
         }
     }
+    
+    public function actionDefault(){
+        if (!$this->getUser()->isAllowed('stats', 'show')) {
+            $this->error('Nemáte oprávnění ke zobrazení statistik.', \Nette\Http\IResponse::S403_FORBIDDEN);
+        }
+    }
+    
+    public function actionAuthors(){
+        if (!$this->getUser()->isAllowed('stats', 'show')) {
+            $this->error('Nemáte oprávnění ke zobrazení statistik.', \Nette\Http\IResponse::S403_FORBIDDEN);
+        }
+    }
 }
