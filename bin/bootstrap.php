@@ -11,12 +11,12 @@ $configurator = new Nette\Configurator;
 $configurator->setTempDirectory(__DIR__ . '/../temp');
 
 $configurator->createRobotLoader()
-	->addDirectory(__DIR__)
+	->addDirectory(__DIR__ . '/../app')
 	->register();
 
 $configurator->addConfig(__DIR__ . '/../app/config/config.neon');
 $configurator->addConfig(__DIR__ . '/../app/config/config.local.neon');
 
-//$container = $configurator->createContainer();
+$container = $configurator->createContainer();
 
-//return $container;
+return $container;

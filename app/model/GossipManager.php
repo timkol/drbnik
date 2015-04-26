@@ -73,9 +73,17 @@ class GossipManager extends Nette\Object
      * @param string|null $status
      * @return \Nette\Database\Table\ActiveRow
      */
-    public function getByStatus($status = null) {
+    public function getByStatus($status = null, $modifiedMax = null, $modifiedMin = null) {
+        if($modifiedMax === null) {
+            $modifiedMax = date('Y-m-d H:i:s');
+        }
+        if($modifiedMin === null) {
+            $modifiedMin = date('Y-m-d H:i:s', 1);
+        }
+        
         $statusRow = $this->database->table('status')->where('name', $status)->fetch();
-        return $this->database->table('v_gossip_status')->where('status_id', $statusRow->status_id);
+        return $this->database->table('v_gossip_status')->where('status_id', $statusRow->status_id)
+                ->where('modified <= ?', $modifiedMax)->where('modified > ?', $modifiedMin);
     }
     
     /**
@@ -83,13 +91,38 @@ class GossipManager extends Nette\Object
      * @param string|null $status
      * @return \Nette\Database\ResultSet
      */
-    public function getByAuthor($author_id = null, $status = null) {
+    public function getByAuthor($author_id = null, $status = null, $modified = null) {
+        if($modified === null) {
+            $modified = date('Y-m-d H:i:s');
+        }
+        
         $statusRow = $this->database->table('status')->where('name', $status)->fetch();
         $gossips = $this->database->query('SELECT vs.* FROM v_gossip_status vs '
                 . 'JOIN gossip_author ga USING(gossip_id) '
                 . 'WHERE ga.author_id = ? '
                 . 'AND vs.status_id = ? '
-                . 'ORDER BY vs.modified', $author_id, $statusRow->status_id);
+                . 'AND vs.modified <= ? '
+                . 'ORDER BY vs.modified', $author_id, $statusRow->status_id, $modified);
+        return $gossips;
+    }
+    
+    /**
+     * 
+     * @param string|null $status
+     * @return \Nette\Database\ResultSet
+     */
+    public function getByVictim($author_id = null, $status = null, $modified = null) {
+        if($modified === null) {
+            $modified = date('Y-m-d H:i:s');
+        }
+        
+        $statusRow = $this->database->table('status')->where('name', $status)->fetch();
+        $gossips = $this->database->query('SELECT vs.* FROM v_gossip_status vs '
+                . 'JOIN gossip_victim gv USING(gossip_id) '
+                . 'WHERE gv.victim_id = ? '
+                . 'AND vs.status_id = ? '
+                . 'AND vs.modified <= ? '
+                . 'ORDER BY vs.modified', $author_id, $statusRow->status_id, $modified);
         return $gossips;
     }
     
