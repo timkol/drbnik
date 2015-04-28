@@ -37,8 +37,13 @@ class AnimatedGossipFactory extends Nette\Object {
         
         $gossipTable = $this->database->table('v_gossip_status')->where('status_id', $statusRow->status_id)->order('modified');
         if(!$previousRow) {
-            return $gossipTable->fetch();
+            return $this->database->table('v_gossip_status')->where('status_id', $statusRow->status_id)->order('modified')->fetch();
         }
-        return $gossipTable->where('modified > ?', $previousRow->modified)->fetch();
+        
+        $newRow = $gossipTable->where('modified > ?', $previousRow->modified)->fetch();
+        if(!$newRow) {
+            return $this->database->table('v_gossip_status')->where('status_id', $statusRow->status_id)->order('modified')->fetch();
+        }
+        return $newRow;
     }
 }

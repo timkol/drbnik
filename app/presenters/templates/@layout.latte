@@ -18,10 +18,11 @@
     </head>
 
     <body role="document">
-
+        {block menu}
         {if $user->loggedIn}
             {include 'menu.latte'}
         {/if}
+        {/block}
 
         <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}" role="alert">{$flash->message}</div>
 

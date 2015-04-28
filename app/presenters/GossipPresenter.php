@@ -28,15 +28,19 @@ class GossipPresenter extends BasePresenter
     /** @var GossipManager */
     private $model;
     
+    /** @var  Nette\Http\Request */
+    private $httpRequest;
+    
     /** @var AnimatedGossipFactory @inject */
     public $aniGossFactory;
 
-    public function __construct(Nette\Database\Context $database, GossipToken $token, GossipManager $model)
+    public function __construct(Nette\Database\Context $database, GossipToken $token, GossipManager $model, Nette\Http\Request $httpRequest)
     {
         parent::__construct();
         $this->database = $database;
         $this->token = $token;
         $this->model = $model;
+        $this->httpRequest = $httpRequest;
     }    
 
 //    public function renderDefault()
@@ -78,11 +82,10 @@ class GossipPresenter extends BasePresenter
         if (!$this->getUser()->isAllowed('gossip', 'show')) {
             $this->error('Nemáte oprávnění k prohlížení drbů.', \Nette\Http\IResponse::S403_FORBIDDEN);
         }
-        $previousId = $this->request->getPost('id');
+        $previousId = $this->httpRequest->getQuery('id');
         $new_drb = $this->aniGossFactory->create($previousId);
         $request = '<div class="drb">' . $new_drb->getParsed() . '</div>';
-        $id = $new_drb->getLength();
-        
+        $id = $new_drb->getId();
         if($this->isAjax()) {
             $this->sendResponse(new JsonResponse(array('html' => $request, 'id' => $id)));
         }
