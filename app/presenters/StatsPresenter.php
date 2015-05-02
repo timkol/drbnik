@@ -43,7 +43,7 @@ class StatsPresenter extends BasePresenter
             $this->template->gossips[$name] = $this->model->getByStatus($status)->count();
         }
     }
-    
+
     public function renderAuthors() {
         $options = array(
             'new' => 'Nové',
@@ -63,6 +63,7 @@ class StatsPresenter extends BasePresenter
                 $this->template->authors[$authorName]['all'] += $this->template->authors[$authorName][$name];
             }
         }
+        arsort($this->template->authors);
     }
     
     public function actionDefault(){
