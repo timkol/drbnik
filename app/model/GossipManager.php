@@ -111,7 +111,7 @@ class GossipManager extends Nette\Object
      * @param string|null $status
      * @return \Nette\Database\ResultSet
      */
-    public function getByVictim($author_id = null, $status = null, $modified = null) {
+    public function getByVictim($victim_id = null, $status = null, $modified = null) {
         if($modified === null) {
             $modified = date('Y-m-d H:i:s');
         }
@@ -122,7 +122,7 @@ class GossipManager extends Nette\Object
                 . 'WHERE gv.victim_id = ? '
                 . 'AND vs.status_id = ? '
                 . 'AND vs.modified <= ? '
-                . 'ORDER BY vs.modified', $author_id, $statusRow->status_id, $modified);
+                . 'ORDER BY vs.modified', $victim_id, $statusRow->status_id, $modified);
         return $gossips;
     }
     
