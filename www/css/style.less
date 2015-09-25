@@ -9,6 +9,7 @@ and open the template in the editor.
 */
 /*@import "./bootstrap.min.less";
 */
+@import "./fonts.less";
 @import "./colors.less";
 
 @media screen,projection {
@@ -17,11 +18,12 @@ and open the template in the editor.
         padding: 0;
     }
     body{
-        font-family: monospace;
+        font-family: @font_family;
 
         width: 100%;
         background-color: @background_color;
         color: @font_color;
+        background-image: @background_image;
     }
     .drb{
         background-color: transparent;
