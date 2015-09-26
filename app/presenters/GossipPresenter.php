@@ -72,7 +72,7 @@ class GossipPresenter extends BasePresenter
     protected function createComponentGossipForm() {
         $form = $this->factory->createGossipForm();
 	$form->onSuccess[] = function ($form) {        
-            $form->getPresenter()->flashMessage('Gratulujeme k odeslání drbu.', 'success');
+            $form->getPresenter()->flashMessage('Varys vám děkuje.', 'success');
             $form->getPresenter()->redirect('Gossip:');
 	};
 	return $form;

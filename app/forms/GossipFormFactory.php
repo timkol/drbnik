@@ -45,10 +45,10 @@ class GossipFormFactory extends BaseFormFactory
         $form->addMultiSelect('victims', 'Oběti:', $persons)
                 ->setRequired('Musí být vyplněna alespoň jedna oběť.')
                  ->setAttribute('class','victims');
-        $form->addTextArea('gossip', 'Text drbu:')
-                ->addRule(Form::MAX_LENGTH, 'Text drbu smí být dlouhý maximálně %d znaků.', 65535)
-                ->setRequired('Text drbu nesmí být prázdný')
-                ->setAttribute('placeholder', 'Zde napiš text drbu.');
+        $form->addTextArea('gossip', 'Text štěbetu:')
+                ->addRule(Form::MAX_LENGTH, 'Text stěbetu smí být dlouhý maximálně %d znaků.', 65535)
+                ->setRequired('Text štěbetu nesmí být prázdný')
+                ->setAttribute('placeholder', 'Zde napiš text štěbetu.');
         $form->addSubmit('submit', 'Odeslat');
         $form->addButton('null','původní hodnoty')
                 ->setAttribute('type', 'reset')
@@ -81,7 +81,7 @@ class GossipFormFactory extends BaseFormFactory
         $persons = array();
         
         foreach ($types as $personType => $personGroup) {
-            $persQuery = $this->database->table('person')->where('person_type', $personType);
+            $persQuery = $this->database->table('person')->where('person_type', $personType)->order('display_name');
             $pers = array();
             foreach ($persQuery as $person) {
                 
