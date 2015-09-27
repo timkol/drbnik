@@ -134,4 +134,28 @@ CREATE TABLE `token` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+DROP TABLE IF EXISTS `trial`;
+CREATE TABLE `trial` (
+  `trial_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8_czech_ci NOT NULL,
+  `author_id` int(11) NOT NULL,
+  PRIMARY KEY (`trial_id`),
+  KEY `author_id` (`author_id`),
+  CONSTRAINT `trial_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `person` (`person_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+
+DROP TABLE IF EXISTS `trial_pass`;
+CREATE TABLE `trial_pass` (
+  `trial_pass_id` int(11) NOT NULL AUTO_INCREMENT,
+  `trial_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  PRIMARY KEY (`trial_pass_id`),
+  KEY `trial_id` (`trial_id`),
+  KEY `student_id` (`student_id`),
+  CONSTRAINT `trial_pass_ibfk_1` FOREIGN KEY (`trial_id`) REFERENCES `trial` (`trial_id`),
+  CONSTRAINT `trial_pass_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `person` (`person_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+
 -- 2015-04-25 08:13:49

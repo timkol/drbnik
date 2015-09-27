@@ -15,6 +15,7 @@ services:
             - addResource(gossip) #displayForm, add, edit, approve, show
             - addResource(person) #add, edit, editMyself
             - addResource(stats) #show
+            - addResource(trial)
 
             #ACL
             #- allow(guest, gossip, add, [@tokenAssertion, 'isCooledDown'])
@@ -23,4 +24,5 @@ services:
             - allow(authenticated, gossip, add, [@gossipPoolAssertion, 'canAdd'])
 
             - allow(org, gossip)
+            - allow(org, trial)
             - allow(admin, Nette\Security\Permission::ALL)
