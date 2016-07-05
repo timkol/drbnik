@@ -150,6 +150,7 @@ CREATE TABLE `trial_pass` (
   `trial_pass_id` int(11) NOT NULL AUTO_INCREMENT,
   `trial_id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`trial_pass_id`),
   KEY `trial_id` (`trial_id`),
   KEY `student_id` (`student_id`),

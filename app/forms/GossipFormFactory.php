@@ -59,6 +59,9 @@ class GossipFormFactory extends BaseFormFactory
     }
     
     public function loggedAuthorFilledValidator($item, $arg) {
+        if($arg === null){
+            return true;
+        }
         return in_array($arg, $item->value);
     }
         
