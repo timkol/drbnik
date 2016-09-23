@@ -42,13 +42,13 @@ class GossipFormFactory extends BaseFormFactory
                 ->addRule(array($this, 'loggedAuthorFilledValidator'), 'Přihlášený člověk musí být autorem.', $this->getLoggedPersonId())
                 ->setAttribute('class','authors');
         
-        $form->addMultiSelect('victims', 'Oběti:', $persons)
-                ->setRequired('Musí být vyplněna alespoň jedna oběť.')
+        $form->addMultiSelect('victims', 'Provinilci:', $persons)
+                ->setRequired('Musí být vyplněna alespoň jeden provinilec.')
                  ->setAttribute('class','victims');
-        $form->addTextArea('gossip', 'Text štěbetu:')
-                ->addRule(Form::MAX_LENGTH, 'Text stěbetu smí být dlouhý maximálně %d znaků.', 65535)
-                ->setRequired('Text štěbetu nesmí být prázdný')
-                ->setAttribute('placeholder', 'Zde napiš text štěbetu.');
+        $form->addTextArea('gossip', 'Text stížnosti:')
+                ->addRule(Form::MAX_LENGTH, 'Text stížnosti smí být dlouhý maximálně %d znaků.', 65535)
+                ->setRequired('Text stížnosti nesmí být prázdný')
+                ->setAttribute('placeholder', 'Zde napiš text stížnosti.');
         $form->addSubmit('submit', 'Odeslat');
         $form->addButton('null','původní hodnoty')
                 ->setAttribute('type', 'reset')
@@ -68,7 +68,7 @@ class GossipFormFactory extends BaseFormFactory
     public function gossipFormSucceeded(Form $form, $values)
     {
         if (!$this->user->isAllowed('gossip', 'add')) {
-            $form->getPresenter()->error('Nemáte oprávnění pro přidání drbu.', \Nette\Http\IResponse::S403_FORBIDDEN);
+            $form->getPresenter()->error('Nemáte oprávnění pro nahlášení nesprávného chování na pracovišti.', \Nette\Http\IResponse::S403_FORBIDDEN);
         }
         $this->token->generateToken();
         
@@ -77,9 +77,9 @@ class GossipFormFactory extends BaseFormFactory
     
     private function createPersonList() {
         $types = array(
-            'pako' => 'Účastníci',
-            'org' => 'Organizátoři',
-            'visit' => 'Návštěva',
+            'pako' => 'Zaměstnanci',
+            'org' => 'Vedení',
+            'visit' => 'Zákazníci',
         );
         $persons = array();
         
@@ -131,7 +131,7 @@ class GossipFormFactory extends BaseFormFactory
     
     public function approveFormSucceeded(Form $form, $values) {
         if (!$this->user->isAllowed('gossip', 'approve')) {
-            $form->getPresenter()->error('Nemáte oprávnění pro schvalování drbů.', \Nette\Http\IResponse::S403_FORBIDDEN);
+            $form->getPresenter()->error('Nemáte oprávnění pro schvalování nesprávného chování na pracovišti.', \Nette\Http\IResponse::S403_FORBIDDEN);
         }
         
         foreach($values as $gossipId => $status) {

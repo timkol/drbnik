@@ -158,5 +158,27 @@ CREATE TABLE `trial_pass` (
   CONSTRAINT `trial_pass_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `person` (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
+DROP TABLE IF EXISTS `feedback`;
+CREATE TABLE `feedback` (
+  `feedback_id` int(11) NOT NULL AUTO_INCREMENT,
+  `feedback` text NOT NULL,
+  `inserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`feedback_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `feedback_author`;
+CREATE TABLE `feedback_author` (
+  `feedback_author_id` int(11) NOT NULL AUTO_INCREMENT,
+  `feedback_id` int(11) NOT NULL,
+  `author_id` int(11) NOT NULL,
+  PRIMARY KEY (`feedback_author_id`),
+  UNIQUE KEY `feedback_author_UNIQUE` (`feedback_id`,`author_id`),
+  KEY `author_id` (`author_id`),
+  KEY `feedback_id` (`feedback_id`),
+  CONSTRAINT `feedback_author_ibfk_12` FOREIGN KEY (`feedback_id`) REFERENCES `feedback` (`feedback_id`),
+  CONSTRAINT `feedback_author_ibfk_7` FOREIGN KEY (`author_id`) REFERENCES `person` (`person_id`) ON DELETE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 -- 2015-04-25 08:13:49

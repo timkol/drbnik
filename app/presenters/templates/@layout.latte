@@ -4,12 +4,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>{ifset title}{include title|striptags} | {/ifset}Varysovi ptáčci</title>
+        <title>{ifset title}{include title|striptags} | {/ifset}FKSIS</title>
 
         {*<link rel="stylesheet" href="{$basePath}/css/style.css">*}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" />
-        <link rel="shortcut icon" href="{$basePath}/images/matrix_icon.png" /> 
+        <link rel="shortcut icon" href="{$basePath}/images/korporace_logo.png" /> 
         {*<link rel="stylesheet/less" href="{$basePath}/css/bootstrap.min.less" />*}
         <link rel="stylesheet/less" type="text/css" charset="UTF-8" href="{$basePath}/css/style.less" />
         <script src="{$basePath}/js/less.js" type="text/javascript" charset="UTF-8"></script>
@@ -19,9 +19,9 @@
 
     <body role="document">
         {block menu}
-        {if $user->loggedIn}
+        {*{if $user->loggedIn}*}
             {include 'menu.latte'}
-        {/if}
+        {*{/if}*}
         {/block}
 
         <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}" role="alert">{$flash->message}</div>

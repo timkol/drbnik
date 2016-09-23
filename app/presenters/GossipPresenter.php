@@ -7,7 +7,7 @@ use Nette,
 use Nette\Application\UI;
 use App\Model\GossipToken\GossipToken;
 use App\Forms\GossipFormFactory;
-use App\Model\GossipManager;
+use App\Model\FeedbackManager;
 use Nette\Application\Responses\JsonResponse;
 use App\Model\AnimatedGossip\AnimatedGossipFactory;
 
@@ -25,7 +25,7 @@ class GossipPresenter extends BasePresenter
     /** @var GossipToken */
     private $token;
     
-    /** @var GossipManager */
+    /** @var FeedbackManager */
     private $model;
     
     /** @var  Nette\Http\Request */
@@ -34,7 +34,7 @@ class GossipPresenter extends BasePresenter
     /** @var AnimatedGossipFactory @inject */
     public $aniGossFactory;
 
-    public function __construct(Nette\Database\Context $database, GossipToken $token, GossipManager $model, Nette\Http\Request $httpRequest)
+    public function __construct(Nette\Database\Context $database, GossipToken $token, FeedbackManager $model, Nette\Http\Request $httpRequest)
     {
         parent::__construct();
         $this->database = $database;
@@ -56,7 +56,7 @@ class GossipPresenter extends BasePresenter
 
     public function actionApprove(){
         if (!$this->getUser()->isAllowed('gossip', 'approve')) {
-            $this->error('Nemáte oprávnění ke schvalování drbů.', \Nette\Http\IResponse::S403_FORBIDDEN);
+            $this->error('Nemáte oprávnění ke schvalování nesprávného chování na pracovišti.', \Nette\Http\IResponse::S403_FORBIDDEN);
         }
     }
     
@@ -72,7 +72,7 @@ class GossipPresenter extends BasePresenter
     protected function createComponentGossipForm() {
         $form = $this->factory->createGossipForm();
 	$form->onSuccess[] = function ($form) {        
-            $form->getPresenter()->flashMessage('Varys vám děkuje.', 'success');
+            $form->getPresenter()->flashMessage('Vedení společnosti Vám děkuje.', 'success');
             $form->getPresenter()->redirect('Gossip:');
 	};
 	return $form;
@@ -80,7 +80,7 @@ class GossipPresenter extends BasePresenter
     
     public function actionAjax() {
         if (!$this->getUser()->isAllowed('gossip', 'show')) {
-            $this->error('Nemáte oprávnění k prohlížení drbů.', \Nette\Http\IResponse::S403_FORBIDDEN);
+            $this->error('Nemáte oprávnění k prohlížení nesprávného chování na pracovišti.', \Nette\Http\IResponse::S403_FORBIDDEN);
         }
         $previousId = $this->httpRequest->getQuery('id');
         $new_drb = $this->aniGossFactory->create($previousId);

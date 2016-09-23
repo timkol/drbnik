@@ -16,6 +16,7 @@ services:
             - addResource(person) #add, edit, editMyself
             - addResource(stats) #show
             - addResource(trial)
+            - addResource(feedback)
 
             #ACL
             - allow(guest, gossip, displayForm)
@@ -23,6 +24,9 @@ services:
             - allow(authenticated, person, editMyself)
             - allow(authenticated, gossip, displayForm)
             - allow(authenticated, gossip, add, [@gossipPoolAssertion, 'canAdd'])
+
+            - allow(guest, feedback, displayForm)
+            - allow(guest, feedback, add)
 
             - allow(org, gossip)
             - allow(org, trial)
