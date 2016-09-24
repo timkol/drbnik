@@ -17,9 +17,9 @@ class AudioManager extends Nette\Object {
 
     public function __construct(Nette\Security\User $user, Nette\DI\Container $context)
     {
-        $this->user = $user;
+        $this->user    = $user;
         $this->context = $context;
-        //$basePath = $this->context->parameters['audio']['basePath'];
+        $audioDir      = $this->context->parameters['audio']['basePath'];
     }
     
     public function addCronTab( $day, $hour, $min, $file, $rep )
