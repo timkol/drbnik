@@ -33,6 +33,48 @@ class AudioManager extends Nette\Object {
         }
     }
 
+
+    public function addCronTab( $day, $hour, $min, $file, $rep )
+    {
+        $audioList = $this->readCronTab();
+        $audioList[] = array(
+            "day"  => $day,
+            "hour" => $hour,
+            "min"  => $min,
+            "file" => $file,
+            "rep"  => $rep,
+            "user" => null
+        );
+        writeLineCronTab( $audioList );
+
+    public function readCronTab( )
+    {
+        $audioList = array();
+        exec( "crontab -l > " . $this->cronFileName );
+        $cronFile = fopen( $this->cronFileName, "r" );
+
+        $line = fgets( $cronFile );
+        $line = fgets( $cronFile );
+
+        while( !feof( $cronFile ) ) {
+            $line = fgets( $cronFile );
+            $rawData = explode( " ", $line );
+            if( count( $rawData ) != 11)
+                break;
+            $audioList[] = array(
+                "day"  => $rawData[4],
+                "hour" => $rawData[1],
+                "min"  => $rawData[0],
+                "file" => $rawData[8],
+                "rep"  => $rawData[7],
+                "user" => $rawData[10]
+            );
+        }
+        fclose( $cronFile );
+
+        return $audioList;
+    }
+
     #private function writeCronTab( )
     public function writeCronTab( $audioList )
     {
@@ -43,16 +85,20 @@ class AudioManager extends Nette\Object {
         foreach( $audioList as $audio)
             $this->writeLineCronTab( $cronFile,
                 $audio["day"], $audio["hour"], $audio["min"],
-                $audio["file"], $audio["rep"] );
+                $audio["file"], $audio["rep"], $audio["user"] );
 
         fclose( $cronFile );
         exec( "cat " . $this->cronFileName . " | crontab -" );
     }
 
-    private function writeLineCronTab( $cronFile, $day, $hour, $min, $file, $rep )
+    private function writeLineCronTab( $cronFile, $day, $hour, $min, $file, $rep, $user = null )
     {
+        if( is_null( $user ) )
+            $user = $this->user->id;
+        if( $user == "" )
+            $user = "fantomas";
         fwrite( $cronFile,
-            $min . " " . $hour . " * * " . $day . " cvlc --input-repeat " . $rep . " " . $file . " # " . $this->user->id . "\n" );
+            $min . " " . $hour . " * * " . $day . " cvlc --input-repeat " . $rep . " " . $file . " # " . $user . "\n" );
     }
 
     public function stopPlay( )
