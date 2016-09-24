@@ -40,11 +40,13 @@ class LukasTest extends Tester\TestCase
                     "hour" => 2,
                     "min"  => 3,
                     "file" => "xxx.mp3",
-                    "rep"  => 10
+                    "rep"  => 10,
+                    "user" => null
                     )
                 );
 
         $this->audio->writeCronTab( $audioList );
+        $this->audio->readCronTab( );
 	}
 
 }
