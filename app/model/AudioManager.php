@@ -46,6 +46,7 @@ class AudioManager extends Nette\Object {
             "user" => null
         );
         writeLineCronTab( $audioList );
+    }
 
     public function readCronTab( )
     {
@@ -73,6 +74,32 @@ class AudioManager extends Nette\Object {
         fclose( $cronFile );
 
         return $audioList;
+    }
+
+    public function readFutureCronTab( )
+    {
+        $futureAudioList = array();
+
+        $audioList = $this->readCronTab();
+        $dateTime = new \DateTime( );
+        $dates = explode( " ", $dateTime->format( "w G i" ) );
+        $day  = $dates[0] % 7;
+        $hour = $dates[1];
+        $min  = $dates[2];
+        foreach( $audioList as $audio) {
+            if( $day > $audio["day"] )
+                continue;
+            if( $day ==  $audio["day"] ) {
+                if( $hour > $audio["hour"] )
+                    continue;
+                if( $hour == $audio["hour"] ) {
+                    if( $min > $audio["min"] )
+                        continue;
+                }
+            }
+            $futureAudioList[] = $audio;
+        }
+        return $futureAudioList;
     }
 
     #private function writeCronTab( )

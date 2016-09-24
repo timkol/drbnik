@@ -47,6 +47,7 @@ class LukasTest extends Tester\TestCase
 
         $this->audio->writeCronTab( $audioList );
         $this->audio->readCronTab( );
+        $this->audio->readFutureCronTab( );
 	}
 
 }
