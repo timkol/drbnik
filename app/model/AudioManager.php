@@ -12,6 +12,7 @@ class AudioManager extends Nette\Object {
     private $context;
     
     private $cronFileName = "/tmp/crontabs-fks-audio";
+    private $audioDir     = "";
 
 
     public function __construct(Nette\Security\User $user, Nette\DI\Container $context)
@@ -21,40 +22,21 @@ class AudioManager extends Nette\Object {
         //$basePath = $this->context->parameters['audio']['basePath'];
     }
     
-    /**
-     *
-     * @param string $feedback
-     * @param array $authors
-     */
-    public function add($feedback, $authors) {
-        $gossipInsert = $this->database->table('feedback')->insert(array(
-            'feedback' => $feedback
-        ));
-        
-        foreach ($authors as $author) {
-            $this->database->table('feedback_author')->insert(array(
-                'feedback_id' => $gossipInsert->feedback_id,
-                'author_id' => $author
-            ));
-        }
-    }
-
-
     public function addCronTab( $day, $hour, $min, $file, $rep )
     {
-        $audioList = $this->readCronTab();
+        $audioList = $this->readCronTab( );
         $audioList[] = array(
             "day"  => $day,
             "hour" => $hour,
             "min"  => $min,
-            "file" => $file,
+            "file" => $this->audioDir . "/" . $file,
             "rep"  => $rep,
             "user" => null
         );
-        writeLineCronTab( $audioList );
+        $this->writeCronTab( $audioList );
     }
 
-    public function readCronTab()
+    public function readCronTab( )
     {
         $audioList = array();
         exec( "crontab -l > " . $this->cronFileName );
@@ -67,7 +49,7 @@ class AudioManager extends Nette\Object {
             $line = fgets( $cronFile );
             $rawData = explode( " ", $line );
             if( count( $rawData ) != 11)
-                break;
+                continue;
             $audioList[] = array(
                 "day"  => $rawData[4],
                 "hour" => $rawData[1],
@@ -84,15 +66,15 @@ class AudioManager extends Nette\Object {
 
     public function readFutureCronTab( )
     {
-        $futureAudioList = array();
+        $futureAudioList = array( );
 
-        $audioList = $this->readCronTab();
+        $audioList = $this->readCronTab( );
         $dateTime = new \DateTime( );
         $dates = explode( " ", $dateTime->format( "w G i" ) );
         $day  = $dates[0] % 7;
         $hour = $dates[1];
         $min  = $dates[2];
-        foreach( $audioList as $audio) {
+        foreach( $audioList as $audio ) {
             if( $day > $audio["day"] )
                 continue;
             if( $day ==  $audio["day"] ) {
@@ -108,18 +90,18 @@ class AudioManager extends Nette\Object {
         return $futureAudioList;
     }
 
-    #private function writeCronTab( )
     public function writeCronTab( $audioList )
     {
         $cronFile = fopen( $this->cronFileName, "w" );
         fwrite( $cronFile, "SHELL=/bin/sh\n" );
         fwrite( $cronFile, "PATH=/usr/bin\n" );
 
-        foreach( $audioList as $audio)
+        foreach( $audioList as $audio )
             $this->writeLineCronTab( $cronFile,
                 $audio["day"], $audio["hour"], $audio["min"],
                 $audio["file"], $audio["rep"], $audio["user"] );
 
+        fwrite( $cronFile, "\n" );
         fclose( $cronFile );
         exec( "cat " . $this->cronFileName . " | crontab -" );
     }
@@ -131,11 +113,34 @@ class AudioManager extends Nette\Object {
         if( $user == "" )
             $user = "fantomas";
         fwrite( $cronFile,
-            $min . " " . $hour . " * * " . $day . " cvlc --input-repeat " . $rep . " " . $file . " # " . $user . "\n" );
+            $min . " " . $hour . " * * " . $day . " cvlc --input-repeat " . $rep . " " . $file . " # " . $user );
     }
 
-    public function stopPlay( )
+    public function stopPlayAudio( )
     {
         exec( 'killall vlc' );
+    }
+
+    public function playAudio( $filename, $rep )
+    {
+        if( Strings::webalize( $filename ) !== $file )
+            return;
+        exec( "cvlc --input-repeat " . $rep . " " . $audioDir . "/" . $filename );
+    }
+
+    public function listAudio( )
+    {
+        return array_diff( scandir( $this->audioDir ), array('..', '.') );
+    }
+
+    public function addAudio( $file )
+    {
+    }
+
+    public function deleteAudio( $filename )
+    {
+        if( Strings::webalize( $filename ) !== $file )
+            return;
+        exec( "rm " . $this->audioDir . "/" . $filename );
     }
 }
