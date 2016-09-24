@@ -37,7 +37,6 @@ class FeedbackFormFactory extends BaseFormFactory
         
         $form = parent::create();
         $form->addMultiSelect('authors', 'Autoři:', $persons)
-                ->setRequired('Musí být vyplněn alespoň jeden autor.')
                 ->setDefaultValue($this->getLoggedPersonId())
                 ->addRule(array($this, 'loggedAuthorFilledValidator'), 'Přihlášený člověk musí být autorem.', $this->getLoggedPersonId())
                 ->setAttribute('class','authors');
@@ -67,7 +66,7 @@ class FeedbackFormFactory extends BaseFormFactory
             $form->getPresenter()->error('Nemáte oprávnění pro přidání zhodnocení pracoviště.', \Nette\Http\IResponse::S403_FORBIDDEN);
         }
         
-        $this->manager->add($values->gossip, $values->authors);
+        $this->manager->add($values->feedback, $values->authors);
     }
     
     private function createPersonList() {
