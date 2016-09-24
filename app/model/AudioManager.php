@@ -15,11 +15,11 @@ class AudioManager extends Nette\Object {
     }
     
     /**
-     * 
+     *
      * @param string $feedback
      * @param array $authors
      */
-    public function add($feedback, $authors) {        
+    public function add($feedback, $authors) {
         $gossipInsert = $this->database->table('feedback')->insert(array(
             'feedback' => $feedback
         ));
@@ -30,5 +30,10 @@ class AudioManager extends Nette\Object {
                 'author_id' => $author
             ));
         }
+    }
+
+    public function stop_play( )
+    {
+        exec( 'killall vlc' );
     }
 }
