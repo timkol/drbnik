@@ -48,7 +48,7 @@ class AudioManager extends Nette\Object {
         writeLineCronTab( $audioList );
     }
 
-    public function readCronTab( )
+    public function readCronTab()
     {
         $audioList = array();
         exec( "crontab -l > " . $this->cronFileName );

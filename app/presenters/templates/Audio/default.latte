@@ -1,0 +1,14 @@
+{* Latte template *}
+
+{block content}
+<a class="btn-danger" href="{link Audio:stop}">zastavit přehrávání</a>
+<table>
+{foreach $files as $file}
+    <tr>
+        <td>{$file['name']}</td>
+        <td><a class="btn" href="{link Audio:play 'filename'=>$file['name']}">spusit</a></td>
+        <td><a class="btn-danger" href="{link Audio:delete 'filename'=>$file['name']}">odstranit</a></td>
+    </tr>
+{/foreach}
+</table>
+{control addForm}
