@@ -1,5 +1,6 @@
 parameters:
-
+    audio:
+        basePath: %appDir%/audio/
 
 database:
 	dsn: 'mysql:host=localhost;dbname=drbnik2'

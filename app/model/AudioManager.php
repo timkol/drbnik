@@ -7,13 +7,19 @@ class AudioManager extends Nette\Object {
     
     /** @var Nette\Security\User */
     private $user;
+    
+    /** @var Nette\DI\Container */
+    private $context;
+    
     private $cronFileName = "/tmp/crontabs-fks-audio";
     private $audioDir     = "";
 
 
-    public function __construct(Nette\Security\User $user)
+    public function __construct(Nette\Security\User $user, Nette\DI\Container $context)
     {
         $this->user = $user;
+        $this->context = $context;
+        //$basePath = $this->context->parameters['audio']['basePath'];
     }
     
     public function addCronTab( $day, $hour, $min, $file, $rep )
