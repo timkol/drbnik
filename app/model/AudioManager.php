@@ -15,28 +15,9 @@ class AudioManager extends Nette\Object {
         $this->user = $user;
     }
     
-    /**
-     *
-     * @param string $feedback
-     * @param array $authors
-     */
-    public function add($feedback, $authors) {
-        $gossipInsert = $this->database->table('feedback')->insert(array(
-            'feedback' => $feedback
-        ));
-        
-        foreach ($authors as $author) {
-            $this->database->table('feedback_author')->insert(array(
-                'feedback_id' => $gossipInsert->feedback_id,
-                'author_id' => $author
-            ));
-        }
-    }
-
-
     public function addCronTab( $day, $hour, $min, $file, $rep )
     {
-        $audioList = $this->readCronTab();
+        $audioList = $this->readCronTab( );
         $audioList[] = array(
             "day"  => $day,
             "hour" => $hour,
@@ -48,7 +29,7 @@ class AudioManager extends Nette\Object {
         writeLineCronTab( $audioList );
     }
 
-    public function readCronTab()
+    public function readCronTab( )
     {
         $audioList = array();
         exec( "crontab -l > " . $this->cronFileName );
@@ -78,15 +59,15 @@ class AudioManager extends Nette\Object {
 
     public function readFutureCronTab( )
     {
-        $futureAudioList = array();
+        $futureAudioList = array( );
 
-        $audioList = $this->readCronTab();
+        $audioList = $this->readCronTab( );
         $dateTime = new \DateTime( );
         $dates = explode( " ", $dateTime->format( "w G i" ) );
         $day  = $dates[0] % 7;
         $hour = $dates[1];
         $min  = $dates[2];
-        foreach( $audioList as $audio) {
+        foreach( $audioList as $audio ) {
             if( $day > $audio["day"] )
                 continue;
             if( $day ==  $audio["day"] ) {
@@ -102,14 +83,13 @@ class AudioManager extends Nette\Object {
         return $futureAudioList;
     }
 
-    #private function writeCronTab( )
     public function writeCronTab( $audioList )
     {
         $cronFile = fopen( $this->cronFileName, "w" );
         fwrite( $cronFile, "SHELL=/bin/sh\n" );
         fwrite( $cronFile, "PATH=/usr/bin\n" );
 
-        foreach( $audioList as $audio)
+        foreach( $audioList as $audio )
             $this->writeLineCronTab( $cronFile,
                 $audio["day"], $audio["hour"], $audio["min"],
                 $audio["file"], $audio["rep"], $audio["user"] );
