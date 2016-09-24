@@ -34,6 +34,7 @@ class LukasTest extends Tester\TestCase
 
     function testRun( )
 	{
+/*
         $audioList = array(
                 array(
                     "day"  => 1,
@@ -46,6 +47,8 @@ class LukasTest extends Tester\TestCase
                 );
 
         $this->audio->writeCronTab( $audioList );
+        */
+        $this->audio->addCronTab( 1, 2, 3, "xxx.mp3", 2 );
         $this->audio->readCronTab( );
         $this->audio->readFutureCronTab( );
 	}

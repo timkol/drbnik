@@ -8,6 +8,7 @@ class AudioManager extends Nette\Object {
     /** @var Nette\Security\User */
     private $user;
     private $cronFileName = "/tmp/crontabs-fks-audio";
+    private $audioDir     = "";
 
 
     public function __construct(Nette\Security\User $user)
@@ -22,11 +23,11 @@ class AudioManager extends Nette\Object {
             "day"  => $day,
             "hour" => $hour,
             "min"  => $min,
-            "file" => $file,
+            "file" => $this->audioDir . "/" . $file,
             "rep"  => $rep,
             "user" => null
         );
-        writeLineCronTab( $audioList );
+        $this->writeCronTab( $audioList );
     }
 
     public function readCronTab( )
@@ -42,7 +43,7 @@ class AudioManager extends Nette\Object {
             $line = fgets( $cronFile );
             $rawData = explode( " ", $line );
             if( count( $rawData ) != 11)
-                break;
+                continue;
             $audioList[] = array(
                 "day"  => $rawData[4],
                 "hour" => $rawData[1],
@@ -94,6 +95,7 @@ class AudioManager extends Nette\Object {
                 $audio["day"], $audio["hour"], $audio["min"],
                 $audio["file"], $audio["rep"], $audio["user"] );
 
+        fwrite( $cronFile, "\n" );
         fclose( $cronFile );
         exec( "cat " . $this->cronFileName . " | crontab -" );
     }
@@ -105,11 +107,34 @@ class AudioManager extends Nette\Object {
         if( $user == "" )
             $user = "fantomas";
         fwrite( $cronFile,
-            $min . " " . $hour . " * * " . $day . " cvlc --input-repeat " . $rep . " " . $file . " # " . $user . "\n" );
+            $min . " " . $hour . " * * " . $day . " cvlc --input-repeat " . $rep . " " . $file . " # " . $user );
     }
 
-    public function stopPlay( )
+    public function stopPlayAudio( )
     {
         exec( 'killall vlc' );
+    }
+
+    public function playAudio( $filename, $rep )
+    {
+        if( Strings::webalize( $filename ) !== $file )
+            return;
+        exec( "cvlc --input-repeat " . $rep . " " . $audioDir . "/" . $filename );
+    }
+
+    public function listAudio( )
+    {
+        return array_diff( scandir( $this->audioDir ), array('..', '.') );
+    }
+
+    public function addAudio( $file )
+    {
+    }
+
+    public function deleteAudio( $filename )
+    {
+        if( Strings::webalize( $filename ) !== $file )
+            return;
+        exec( "rm " . $this->audioDir . "/" . $filename );
     }
 }
