@@ -69,6 +69,7 @@ class AudioManager extends Nette\Object {
         $hour = $dates[1];
         $min  = $dates[2];
         foreach( $audioList as $audio ) {
+            $audio["day"] %= 7;
             if( $day > $audio["day"] )
                 continue;
             if( $day ==  $audio["day"] ) {
