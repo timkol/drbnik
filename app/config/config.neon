@@ -25,12 +25,14 @@ services:
         - App\Model\GossipManager
         - App\Model\TrialManager
         - App\Model\FeedbackManager
+        - App\Model\AudioManager
         - App\Model\AnimatedGossip\AnimatedGossipFactory
         - App\Forms\SignFormFactory
         - App\Forms\PersonFormFactory
         - App\Forms\GossipFormFactory
         - App\Forms\TrialFormFactory
         - App\Forms\FeedbackFormFactory
+        - App\Forms\AudioFormFactory
         router: App\RouterFactory::createRouter
 
 includes:
