@@ -1,6 +1,7 @@
 parameters:
     audio:
-        basePath: %appDir%/audio/
+        basePath: %appDir%/../audio
+        cronFileName: /tmp/crontabs-fks-audio
 
 database:
 	dsn: 'mysql:host=localhost;dbname=drbnik2'

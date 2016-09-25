@@ -11,15 +11,16 @@ class AudioManager extends Nette\Object {
     /** @var Nette\DI\Container */
     private $context;
     
-    private $cronFileName = "/tmp/crontabs-fks-audio";
-    private $audioDir     = "";
+    private $cronFileName;
+    private $audioDir;
 
 
     public function __construct(Nette\Security\User $user, Nette\DI\Container $context)
     {
         $this->user    = $user;
         $this->context = $context;
-        $audioDir      = $this->context->parameters['audio']['basePath'];
+        $this->audioDir = $this->context->parameters['audio']['audioDir'];
+        $this->cronFileName = $this->context->parameters['audio']['cronFileName'];
     }
     
     public function addCronTab( $day, $hour, $min, $file, $rep )
@@ -97,10 +98,11 @@ class AudioManager extends Nette\Object {
         fwrite( $cronFile, "SHELL=/bin/sh\n" );
         fwrite( $cronFile, "PATH=/usr/bin\n" );
 
-        foreach( $audioList as $audio )
+        foreach( $audioList as $audio ){
             $this->writeLineCronTab( $cronFile,
                 $audio["day"], $audio["hour"], $audio["min"],
                 $audio["file"], $audio["rep"], $audio["user"] );
+        }
 
         fwrite( $cronFile, "\n" );
         fclose( $cronFile );
@@ -124,9 +126,9 @@ class AudioManager extends Nette\Object {
 
     public function playAudio( $filename, $rep )
     {
-        if( Strings::webalize( $filename ) !== $file )
+        if( Strings::webalize( $filename ) !== $filename )
             return;
-        exec( "cvlc --input-repeat " . $rep . " " . $audioDir . "/" . $filename );
+        exec( "cvlc --input-repeat " . $rep . " " . $this->audioDir . "/" . $filename );
     }
 
     public function listAudio( )
@@ -134,14 +136,25 @@ class AudioManager extends Nette\Object {
         return array_diff( scandir( $this->audioDir ), array('..', '.') );
     }
 
-    public function addAudio( $file )
+    public function addAudio(\Nette\Http\FileUpload $file )
     {
+        if($file->isOk()){
+            $file->move($this->audioDir."/".$file->getSanitizedName());
+        }
     }
 
     public function deleteAudio( $filename )
     {
-        if( Strings::webalize( $filename ) !== $file )
+        if( Strings::webalize( $filename ) !== $filename )
             return;
         exec( "rm " . $this->audioDir . "/" . $filename );
+    }
+    
+    public function playMic(){
+        
+    }
+    
+    public function stopMic(){
+        
     }
 }

@@ -1,0 +1,25 @@
+{* Latte template *}
+
+{block content}
+{control addCronTabForm}
+
+<table>
+    <th>
+    <td>Den</td>
+    <td>Hodina</td>
+    <td>Minuta</td>
+    <td>Soubor</td>
+    <td>Počet opakování</td>
+    <td>Uživatel</td>
+    </th>
+{foreach $crontab as $line}
+    <tr>
+        <td>{$line['day']}</td>
+        <td>{$line['hour']}</td>
+        <td>{$line['min']}</td>
+        <td>{$line['file']}</td>
+        <td>{$line['rep']}</td>
+        <td>{$line['user']}</td>
+    </tr>
+{/foreach}
+</table>

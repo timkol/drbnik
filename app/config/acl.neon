@@ -17,7 +17,7 @@ services:
             - addResource(stats) #show
             - addResource(trial)
             - addResource(feedback)
-            - addResource(audio) #add, delete, list, play, stop
+            - addResource(audio) #add, delete, list, play, stop, addCron, listCron, playMic, stopMic
 
             #ACL
             - allow(guest, gossip, displayForm)
