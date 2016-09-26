@@ -10,6 +10,7 @@ use App\Forms\GossipFormFactory;
 use App\Model\GossipManager;
 use Nette\Application\Responses\JsonResponse;
 use App\Model\AnimatedGossip\AnimatedGossipFactory;
+use App\Model\Authentication\TokenAuthenticator;
 
 /**
  * Gossip presenter.
@@ -33,6 +34,9 @@ class GossipPresenter extends BasePresenter
     
     /** @var AnimatedGossipFactory @inject */
     public $aniGossFactory;
+    
+    /** @var TokenAuthenticator @inject */
+    public $tokenAuthenticator;
 
     public function __construct(Nette\Database\Context $database, GossipToken $token, GossipManager $model, Nette\Http\Request $httpRequest)
     {
@@ -94,7 +98,7 @@ class GossipPresenter extends BasePresenter
     public function actionDownload($datetimeMax, $datetimeMin) {
         if(!$this->getUser()->isLoggedIn()){
             $key = $this->getHttpRequest()->getQuery("fksis-key");
-            $this->authenticator->login($key);
+            $this->tokenAuthenticator->login($key);
         }
         
         if (!$this->getUser()->isAllowed('gossip', 'show')) {
