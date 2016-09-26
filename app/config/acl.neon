@@ -31,6 +31,7 @@ services:
             - allow(guest, feedback, add)
 
             - allow(org, gossip)
+            - allow(org, feedback)
             - allow(org, trial)
             - allow(org, audio)
             - allow(admin, Nette\Security\Permission::ALL)
