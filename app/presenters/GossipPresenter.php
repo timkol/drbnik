@@ -95,11 +95,14 @@ class GossipPresenter extends BasePresenter
         }
     }
     
-    public function actionDownload($datetimeMax, $datetimeMin) {
+    public function actionDownload($timestampMax, $timestampMin) {
         if(!$this->getUser()->isLoggedIn()){
             $key = $this->getHttpRequest()->getQuery("fksis-key");
             $this->tokenAuthenticator->login($key);
         }
+        
+        $datetimeMax = date('Y-m-d H:i:s', $timestampMax);
+        $datetimeMin = date('Y-m-d H:i:s', $timestampMin);
         
         if (!$this->getUser()->isAllowed('gossip', 'show')) {
             $this->error('Nemáte oprávnění k prohlížení nesprávného chování na pracovišti.', \Nette\Http\IResponse::S403_FORBIDDEN);

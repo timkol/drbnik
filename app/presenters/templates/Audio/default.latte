@@ -1,15 +1,15 @@
 {* Latte template *}
 
 {block content}
-<a class="btn-danger" href="{link Audio:stop}">zastavit přehrávání</a>
-<a class="btn-danger" href="{link Audio:playMic}">spustit mikrofon</a>
-<a class="btn-danger" href="{link Audio:stopMic}">zastavit mikrofon</a>
+<a class="btn btn-danger" href="{link Audio:stop}">zastavit přehrávání</a>
+<a class="btn btn-danger" href="{link Audio:playMic}">spustit mikrofon</a>
+<a class="btn btn-danger" href="{link Audio:stopMic}">zastavit mikrofon</a>
 <table>
 {foreach $files as $file}
     <tr>
         <td>{$file}</td>
-        <td><a class="btn" href="{link Audio:play 'filename'=>$file}">spusit</a></td>
-        <td><a class="btn-danger" href="{link Audio:delete 'filename'=>$file}">odstranit</a></td>
+        <td><a class="btn btn-default" href="{link Audio:play 'filename'=>$file}">spusit</a></td>
+        <td><a class="btn btn-danger" href="{link Audio:delete 'filename'=>$file}">odstranit</a></td>
     </tr>
 {/foreach}
 </table>
