@@ -101,6 +101,9 @@ class GossipPresenter extends BasePresenter
             $this->tokenAuthenticator->login($key);
         }
         
+        $timestampMax = is_numeric($timestampMax)?$timestampMax:time();
+        $timestampMin = is_numeric($timestampMin)?$timestampMin:1;
+        
         $datetimeMax = date('Y-m-d H:i:s', $timestampMax);
         $datetimeMin = date('Y-m-d H:i:s', $timestampMin);
         
