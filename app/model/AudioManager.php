@@ -128,7 +128,7 @@ class AudioManager extends Nette\Object {
     public function playAudio( $filename, $rep )
     {
         if(file_exists($this->audioDir."/".$filename)){
-            exec( "cvlc --no-loop --play-and-exit --input-repeat " . $rep . " " . $this->audioDir . "/" . $filename );
+            exec( "cvlc --no-loop --play-and-exit --input-repeat " . $rep . " " . $this->audioDir . "/" . $filename ." &");
         }
         else{
             throw new Nette\IOException("Nepodařilo se nalézt soubor.");
