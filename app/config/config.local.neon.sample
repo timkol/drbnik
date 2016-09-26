@@ -1,6 +1,6 @@
 parameters:
     audio:
-        basePath: %appDir%/../audio
+        audioDir: %appDir%/../audio
         cronFileName: /tmp/crontabs-fks-audio
         announceScript: %appDir%/../bin/announce.sh
     auth:

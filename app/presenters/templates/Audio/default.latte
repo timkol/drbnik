@@ -7,9 +7,9 @@
 <table>
 {foreach $files as $file}
     <tr>
-        <td>{$file['name']}</td>
-        <td><a class="btn" href="{link Audio:play 'filename'=>$file['name']}">spusit</a></td>
-        <td><a class="btn-danger" href="{link Audio:delete 'filename'=>$file['name']}">odstranit</a></td>
+        <td>{$file}</td>
+        <td><a class="btn" href="{link Audio:play 'filename'=>$file}">spusit</a></td>
+        <td><a class="btn-danger" href="{link Audio:delete 'filename'=>$file}">odstranit</a></td>
     </tr>
 {/foreach}
 </table>

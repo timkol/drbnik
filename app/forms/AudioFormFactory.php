@@ -29,8 +29,8 @@ class AudioFormFactory extends BaseFormFactory
     
     public function createAddFileForm() {        
         $form = parent::create();
-        $form->addUpload('file', 'Audio soubor:')
-                ->setRequired();
+        $form->addUpload('file', 'Audio soubor:');
+                //->setRequired();
         $form->addSubmit('submit', 'Odeslat');
         $form->addProtection('Vypršel časový limit, odešlete formulář znovu.');
         $form->onSuccess[] = array($this, 'addFileFormSucceeded');
