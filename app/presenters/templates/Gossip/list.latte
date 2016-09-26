@@ -1,0 +1,21 @@
+{* Latte template *}
+
+{block content}
+Nové drby:<br>
+<table>
+{foreach $gossips['new'] as $gossip}
+    <tr><td>{$gossip->gossip}</td><td>{$gossip->inserted}</td></tr>
+{/foreach}
+</table>
+Odmítnuté drby:<br>
+<table>
+{foreach $gossips['rejected'] as $gossip}
+    <tr><td>{$gossip->gossip}</td><td>{$gossip->inserted}</td></tr>
+{/foreach}
+</table>
+Schválené drby:<br>
+<table>
+{foreach $gossips['approved'] as $gossip}
+    <tr><td>{$gossip->gossip}</td><td>{$gossip->inserted}</td></tr>
+{/foreach}
+</table>

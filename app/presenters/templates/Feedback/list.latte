@@ -1,0 +1,8 @@
+{* Latte template *}
+
+{block content}
+<table>
+{foreach $feedbacks as $feedback}
+    <tr><td>{$feedback->feedback}</td><td>{$feedback->inserted}</td></tr>
+{/foreach}
+</table>

@@ -52,8 +52,22 @@ class GossipPresenter extends BasePresenter
 //        $this->template->remainingCD = $this->token->getRemainingCooldown()->format('%R %i:%s');
 //    }
     
+    public function renderList(){
+        $this->template->gossips = array(
+            'new' => $this->model->getByStatus('new')->fetchAll(),
+            'approved' => $this->model->getByStatus('approved')->fetchAll(),
+            'rejected' => $this->model->getByStatus('rejected')->fetchAll()
+        );
+    }
+
     public function actionDefault() {
         if (!$this->getUser()->isAllowed('gossip', 'displayForm')) {
+            $this->redirect('Sign:in');
+        }
+    }
+    
+    public function actionList() {
+        if (!$this->getUser()->isAllowed('gossip', 'show')) {
             $this->redirect('Sign:in');
         }
     }

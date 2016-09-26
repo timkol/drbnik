@@ -45,6 +45,16 @@ class FeedbackPresenter extends BasePresenter
         }
     }
     
+    public function actionList() {
+        if (!$this->getUser()->isAllowed('feedback', 'show')) {
+            $this->redirect('Sign:in');
+        }
+    }
+    
+    public function renderList(){
+        $this->template->feedbacks = $this->model->getAll()->fetchAll();
+    }
+
     protected function createComponentFeedbackForm() {
         $form = $this->factory->createFeedbackForm();
 	$form->onSuccess[] = function ($form) {        

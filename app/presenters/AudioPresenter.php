@@ -50,7 +50,7 @@ class AudioPresenter extends BasePresenter
         $form = $this->factory->createAddCronTabForm();
 	$form->onSuccess[] = function ($form) {        
             $form->getPresenter()->flashMessage('Přidání proběhlo úspěšně.', 'success');
-            $form->getPresenter()->redirect('Audio:default');
+            $form->getPresenter()->redirect('Audio:crontab');
 	};
 	return $form;
     }

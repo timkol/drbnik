@@ -34,4 +34,8 @@ class FeedbackManager extends Nette\Object {
             ));
         }
     }
+    
+    public function getAll() {
+        return $this->database->table('feedback');
+    }
 }

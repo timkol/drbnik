@@ -26,6 +26,8 @@
                 <li><a n:href="Stats:authors">Autoři</a></li>
               </ul>
             </li>
+            <li n:if="$user->isAllowed('gossip','show')" {if $presenter->isLinkCurrent('Gossip:list')}class="active"{/if}><a n:href="Gossip:list">Prohlížet drby</a></li>
+            <li n:if="$user->isAllowed('feedback','show')" {if $presenter->isLinkCurrent('Feedback:list')}class="active"{/if}><a n:href="Feedback:list">Prohlížet feedback</a></li>
             <li n:if="$user->isAllowed('trial','confirm')" {if $presenter->isLinkCurrent('Trial:confirm')}class="active"{/if}><a n:href="Trial:confirm">Schválit zkoušky</a></li>
             {*<li n:if="$user->isAllowed('audio','list')" {if $presenter->isLinkCurrent('Audio:default')}class="active"{/if}><a n:href="Audio:default">Spravovat audio</a></li>*}
             <li n:if="$user->isAllowed('audio','list') || $user->isAllowed('audio','listCron')" class="dropdown">
