@@ -72,7 +72,7 @@ class AudioFormFactory extends BaseFormFactory
                 ->setRequired();
         $form->addSubmit('submit', 'Odeslat');
         $form->addProtection('Vypršel časový limit, odešlete formulář znovu.');
-        $form->onSuccess[] = array($this, 'addFileFormSucceeded');
+        $form->onSuccess[] = array($this, 'addCronTabFormSucceeded');
         return $form;
     }
         
