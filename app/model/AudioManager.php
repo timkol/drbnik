@@ -2,6 +2,7 @@
 
 namespace App\Model;
 use Nette;
+use Nette\Utils\Strings;
 
 class AudioManager extends Nette\Object {
 
@@ -141,6 +142,9 @@ class AudioManager extends Nette\Object {
     {
         if($file->isOk()){
             $file->move($this->audioDir."/".$file->getSanitizedName());
+        }
+        else{
+            throw new Nette\IOException("Nepodařilo se nahrát soubor.");
         }
     }
 
