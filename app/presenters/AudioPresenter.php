@@ -60,6 +60,8 @@ class AudioPresenter extends BasePresenter
             $this->error('Nemáte oprávnění k odstranění audio výstupu.', \Nette\Http\IResponse::S403_FORBIDDEN);
         }
         $this->model->deleteAudio($filename);
+        $this->flashMessage('Odstranění proběhlo úspěšně.', 'success');
+        $this->redirect('Audio:default');
     }
     
     public function actionPlay($filename, $repetitions = 1){
@@ -67,6 +69,7 @@ class AudioPresenter extends BasePresenter
             $this->error('Nemáte oprávnění k přehrátí audio výstupu.', \Nette\Http\IResponse::S403_FORBIDDEN);
         }
         $this->model->playAudio($filename, $repetitions);
+        $this->redirect('Audio:default');
     }
     
     public function actionStop(){
@@ -74,6 +77,7 @@ class AudioPresenter extends BasePresenter
             $this->error('Nemáte oprávnění k zastavení audio výstupu.', \Nette\Http\IResponse::S403_FORBIDDEN);
         }
         $this->model->stopPlayAudio();
+        $this->redirect('Audio:default');
     }
     
     public function actionDefault(){
@@ -94,6 +98,7 @@ class AudioPresenter extends BasePresenter
         }
         $this->model->stopPlayAudio();
         $this->model->playMic();
+        $this->redirect('Audio:default');
     }
     
     public function actionStopMic(){
@@ -101,5 +106,6 @@ class AudioPresenter extends BasePresenter
             $this->error('Nemáte oprávnění k ovládání mikrofonu.', \Nette\Http\IResponse::S403_FORBIDDEN);
         }
         $this->model->stopMic();
+        $this->redirect('Audio:default');
     }
 }

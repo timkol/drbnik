@@ -2,7 +2,6 @@
 
 namespace App\Model;
 use Nette;
-use Nette\Utils\Strings;
 
 class AudioManager extends Nette\Object {
 
@@ -128,9 +127,12 @@ class AudioManager extends Nette\Object {
 
     public function playAudio( $filename, $rep )
     {
-        if( Strings::webalize( $filename ) !== $filename )
-            return;
-        exec( "cvlc --no-loop --play-and-exit --input-repeat " . $rep . " " . $this->audioDir . "/" . $filename );
+        if(file_exists($this->audioDir."/".$filename)){
+            exec( "cvlc --no-loop --play-and-exit --input-repeat " . $rep . " " . $this->audioDir . "/" . $filename );
+        }
+        else{
+            throw new Nette\IOException("Nepodařilo se nalézt soubor.");
+        }
     }
 
     public function listAudio( )
@@ -150,9 +152,12 @@ class AudioManager extends Nette\Object {
 
     public function deleteAudio( $filename )
     {
-        if( Strings::webalize( $filename ) !== $filename )
-            return;
-        exec( "rm " . $this->audioDir . "/" . $filename );
+        if(file_exists($this->audioDir."/".$filename)){
+            exec( "rm " . $this->audioDir . "/" . $filename );
+        }
+        else{
+            throw new Nette\IOException("Nepodařilo se nalézt soubor k vymazání.");
+        }
     }
 
     public function playMic(){
