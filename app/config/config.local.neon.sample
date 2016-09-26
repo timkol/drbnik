@@ -3,6 +3,11 @@ parameters:
         basePath: %appDir%/../audio
         cronFileName: /tmp/crontabs-fks-audio
         announceScript: %appDir%/../bin/announce.sh
+    auth:
+        tokenAuth:
+            token: 
+            role: org
+            user: fksis
 
 database:
 	dsn: 'mysql:host=localhost;dbname=drbnik2'

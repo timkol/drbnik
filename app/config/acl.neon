@@ -21,7 +21,8 @@ services:
 
             #ACL
             - allow(guest, gossip, displayForm)
-            - allow(guest, gossip, add, [@tokenAssertion, 'isCooledDown'])
+            #- allow(guest, gossip, add, [@tokenAssertion, 'isCooledDown'])
+            - allow(guest, gossip, add)
             - allow(authenticated, person, editMyself)
             - allow(authenticated, gossip, displayForm)
             - allow(authenticated, gossip, add, [@gossipPoolAssertion, 'canAdd'])

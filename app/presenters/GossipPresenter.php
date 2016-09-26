@@ -7,7 +7,7 @@ use Nette,
 use Nette\Application\UI;
 use App\Model\GossipToken\GossipToken;
 use App\Forms\GossipFormFactory;
-use App\Model\FeedbackManager;
+use App\Model\GossipManager;
 use Nette\Application\Responses\JsonResponse;
 use App\Model\AnimatedGossip\AnimatedGossipFactory;
 
@@ -25,7 +25,7 @@ class GossipPresenter extends BasePresenter
     /** @var GossipToken */
     private $token;
     
-    /** @var FeedbackManager */
+    /** @var GossipManager */
     private $model;
     
     /** @var  Nette\Http\Request */
@@ -34,7 +34,7 @@ class GossipPresenter extends BasePresenter
     /** @var AnimatedGossipFactory @inject */
     public $aniGossFactory;
 
-    public function __construct(Nette\Database\Context $database, GossipToken $token, FeedbackManager $model, Nette\Http\Request $httpRequest)
+    public function __construct(Nette\Database\Context $database, GossipToken $token, GossipManager $model, Nette\Http\Request $httpRequest)
     {
         parent::__construct();
         $this->database = $database;
@@ -89,6 +89,23 @@ class GossipPresenter extends BasePresenter
         if($this->isAjax()) {
             $this->sendResponse(new JsonResponse(array('html' => $request, 'id' => $id)));
         }
+    }
+    
+    public function actionDownload($datetimeMax, $datetimeMin) {
+        if(!$this->getUser()->isLoggedIn()){
+            $key = $this->getHttpRequest()->getQuery("fksis-key");
+            $this->authenticator->login($key);
+        }
+        
+        if (!$this->getUser()->isAllowed('gossip', 'show')) {
+            $this->error('Nemáte oprávnění k prohlížení nesprávného chování na pracovišti.', \Nette\Http\IResponse::S403_FORBIDDEN);
+        }
+        $gossips = $this->model->getByStatus('approved', $datetimeMax, $datetimeMin)->fetchAll();
+        $gossipArr = array();
+        foreach($gossips as $gossip){
+            $gossipArr[] = $gossip['gossip'];
+        }
+        $this->sendResponse(new JsonResponse($gossipArr));
     }
 
 }
