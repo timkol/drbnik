@@ -109,7 +109,7 @@ class GossipPresenter extends BasePresenter
         foreach($gossips as $gossip){
             $gossipArr[] = $gossip['gossip'];
         }
-        $this->sendResponse(new JsonResponse($gossipArr));
+        $this->sendResponse(new JsonResponse($gossipArr, 'application/json; charset=utf-8'));
     }
 
 }
