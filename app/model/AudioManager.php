@@ -4,25 +4,26 @@ namespace App\Model;
 use Nette;
 
 class AudioManager extends Nette\Object {
-    
+
     /** @var Nette\Security\User */
     private $user;
-    
+
     /** @var Nette\DI\Container */
     private $context;
-    
+
     private $cronFileName;
     private $audioDir;
-
+    private $announceScript;
 
     public function __construct(Nette\Security\User $user, Nette\DI\Container $context)
     {
         $this->user    = $user;
         $this->context = $context;
         $this->audioDir = $this->context->parameters['audio']['audioDir'];
+        $this->announceScript = $this->context->parameters['audio']['announceScript'];
         $this->cronFileName = $this->context->parameters['audio']['cronFileName'];
     }
-    
+
     public function addCronTab( $day, $hour, $min, $file, $rep )
     {
         $audioList = $this->readCronTab( );
@@ -116,7 +117,7 @@ class AudioManager extends Nette\Object {
         if( $user == "" )
             $user = "fantomas";
         fwrite( $cronFile,
-            $min . " " . $hour . " * * " . $day . " cvlc --input-repeat " . $rep . " " . $file . " # " . $user );
+            $min . " " . $hour . " * * " . $day . " cvlc --no-loop --play-and-exit  --input-repeat " . $rep . " " . $file . " # " . $user );
     }
 
     public function stopPlayAudio( )
@@ -128,7 +129,7 @@ class AudioManager extends Nette\Object {
     {
         if( Strings::webalize( $filename ) !== $filename )
             return;
-        exec( "cvlc --input-repeat " . $rep . " " . $this->audioDir . "/" . $filename );
+        exec( "cvlc --no-loop --play-and-exit --input-repeat " . $rep . " " . $this->audioDir . "/" . $filename );
     }
 
     public function listAudio( )
@@ -149,12 +150,14 @@ class AudioManager extends Nette\Object {
             return;
         exec( "rm " . $this->audioDir . "/" . $filename );
     }
-    
+
     public function playMic(){
-        
+        //
+        exec($this->announceScript);
     }
-    
+
     public function stopMic(){
-        
+        exec("killall aplay");
+        exec("killall arecord");
     }
 }
