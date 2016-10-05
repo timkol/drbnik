@@ -53,7 +53,9 @@ class GossipFormFactory extends BaseFormFactory
         $form->addButton('null','původní hodnoty')
                 ->setAttribute('type', 'reset')
                 ->setAttribute('class','reset');
-        $form->addProtection('Vypršel časový limit, odešlete formulář znovu.');
+        if($this->user->isLoggedIn()){
+            $form->addProtection('Vypršel časový limit, odešlete formulář znovu.');
+        }
         $form->onSuccess[] = array($this, 'gossipFormSucceeded');
         return $form;
     }

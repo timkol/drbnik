@@ -14,6 +14,7 @@ class AudioManager extends Nette\Object {
     private $cronFileName;
     private $audioDir;
     private $announceScript;
+    private $audioUser;
 
     public function __construct(Nette\Security\User $user, Nette\DI\Container $context)
     {
@@ -22,6 +23,7 @@ class AudioManager extends Nette\Object {
         $this->audioDir = $this->context->parameters['audio']['audioDir'];
         $this->announceScript = $this->context->parameters['audio']['announceScript'];
         $this->cronFileName = $this->context->parameters['audio']['cronFileName'];
+        $this->audioUser = $this->context->parameters['audio']['user'];
     }
 
     public function addCronTab( $day, $hour, $min, $file, $rep )
@@ -161,12 +163,11 @@ class AudioManager extends Nette\Object {
     }
 
     public function playMic(){
-        //
-        exec($this->announceScript);
+        exec("ssh ".$this->audioUser."@localhost '".$this->announceScript." > /dev/null 2>&1 &'");
     }
 
     public function stopMic(){
-        exec("killall aplay");
-        exec("killall arecord");
+        exec("ssh ".$this->audioUser."@localhost 'killall aplay'");
+        exec("ssh ".$this->audioUser."@localhost 'killall arecord'");
     }
 }

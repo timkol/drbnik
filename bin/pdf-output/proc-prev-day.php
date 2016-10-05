@@ -6,9 +6,9 @@ $today              = date("Y-m-d H:i:s", strtotime("today 00:00"));
 $yesterday          = date("Y-m-d H:i:s", strtotime("yesterday 00:00"));
 //$yesterday = "2014-10-01 00:00:00";
 //$today = "2014-10-10 00:00:00";
-$int_dayofweek          = date("w", strtotime("yesterday 00:00"));
-$sous_begin = strtotime("2015-04-25 00:00:00");
-$filename = date("d", strtotime("today 00:00") - $sous_begin);
+$int_dayofweek = date("w", strtotime($yesterday));
+$sous_begin = strtotime("2016-09-24 00:00:00");
+$filename = date("d", strtotime($today) - $sous_begin);
 
 
 $dayofweek = null;
@@ -121,13 +121,14 @@ $drby .= '\end{document}';
 $autori = '\documentclass[12pt, a4paper]{article}'."\n";
 $autori .= '\usepackage[utf8]{inputenc}'."\n";
 $autori .= '\usepackage[czech]{babel}'."\n";
+$autori .= '\usepackage{longtable}'."\n";
 //$autori .= '\usepackage{a4wide}'."\n";
 
 $autori .= '\begin{document}'."\n";
 $autori .= '\begin{Huge}\begin{center}Statistika -- '.$dayofweek.'\end{center}\end{Huge}'."\n";
-$autori .= '\begin{tabular}{|c|c|c| c |c|c|c|}\hline'."\n";
+$autori .= '\begin{longtable}{|c|c|c| c |c|c|c|}\hline'."\n";
 //$autori .= '\cline1--3\cline4--6'."\n";
-$autori .= 'Pořadí & Jméno autora & Počet drbů && Pořadí & Jméno drbaného & Počet drbů \\\\'."\n";
+$autori .= 'Pořadí & Jméno autora & Počet drbů && Pořadí & Jméno drbaného & Počet drbů \\endhead'."\n";
 $autori .= '\hline'."\n";
 
 $maxCount = max(array(count($authors_result), count($victims_result)));
@@ -152,7 +153,7 @@ for($i=0; $i<$maxCount; $i++) {
     }
 	$autori .= '\hline'."\n";
 }
-$autori .= '\end{tabular}'."\n";
+$autori .= '\end{longtable}'."\n";
 $autori .= '\end{document}';
 
 file_put_contents($path_there.'drby/drb'.$filename.'.tex', $drby);

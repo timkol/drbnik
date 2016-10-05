@@ -1,9 +1,9 @@
 #!/bin/bash
 drbnik_path=/home/luky/fykos-org/it/drbnik/
 
-rm -f /home/oracle/drbnik/temp/*
+rm -f ${drbnik_path}temp/*
 /usr/bin/php ${drbnik_path}bin/pdf-output/margaretky.php
-rm -f /home/oracle/drbnik/temp/*
+rm -f ${drbnik_path}temp/*
 
 cd /home/www-tex
 
