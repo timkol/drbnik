@@ -58,7 +58,7 @@ class SignPresenter extends BasePresenter
             $permanentToken = $this->request->getPost('token');
             $this->tokenAuthenticator->login($permanentToken);
             $temporaryToken = $this->tokenAuthenticator->addToken(TokenAuthenticator::TYPE_PHP);
-            $lang = 'cs-CZ';//TODO z DB
+            $lang = $this->user->getIdentity()->lang;
             $this->sendResponse(new JsonResponse(['temporary-token' => $temporaryToken, 'lang' => $lang], 'application/json; charset=utf-8'));
         }
 

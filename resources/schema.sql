@@ -132,6 +132,7 @@ CREATE TABLE `person` (
   `display_name` varchar(511) COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'zobrazované jméno, liší-li se od <other_name> <family_name>',
   `gender` enum('M','F') CHARACTER SET utf8 NOT NULL,
   `person_type` enum('pako','org','visit') CHARACTER SET utf8 NOT NULL DEFAULT 'pako',
+  `lang` enum('cs-CZ','sk-SK') CHARACTER SET utf8 NOT NULL DEFAULT 'cs-CZ',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='řazení: <family_name><other_name>, zobrazení <other_name> <f';
@@ -194,4 +195,4 @@ CREATE TABLE `trial_pass` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
--- 2017-02-19 02:53:43
+-- 2017-02-19 19:41:47
