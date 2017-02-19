@@ -1,9 +1,44 @@
--- Adminer 4.2.0 MySQL dump
+-- Adminer 4.2.5 MySQL dump
 
-SET NAMES utf8mb4;
+SET NAMES utf8;
 SET time_zone = '+00:00';
-SET foreign_key_checks = 0;
-SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+
+DROP TABLE IF EXISTS `auth_token`;
+CREATE TABLE `auth_token` (
+  `auth_token_id` int(11) NOT NULL AUTO_INCREMENT,
+  `login_id` int(11) NOT NULL,
+  `type` enum('WS','PHP','PHP-PERM') COLLATE utf8_bin NOT NULL,
+  `token` char(100) COLLATE utf8_bin NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`auth_token_id`),
+  UNIQUE KEY `token` (`token`),
+  KEY `login_id` (`login_id`),
+  CONSTRAINT `auth_token_ibfk_2` FOREIGN KEY (`login_id`) REFERENCES `login` (`login_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
+DROP TABLE IF EXISTS `feedback`;
+CREATE TABLE `feedback` (
+  `feedback_id` int(11) NOT NULL AUTO_INCREMENT,
+  `feedback` text NOT NULL,
+  `inserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`feedback_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `feedback_author`;
+CREATE TABLE `feedback_author` (
+  `feedback_author_id` int(11) NOT NULL AUTO_INCREMENT,
+  `feedback_id` int(11) NOT NULL,
+  `author_id` int(11) NOT NULL,
+  PRIMARY KEY (`feedback_author_id`),
+  UNIQUE KEY `feedback_author_UNIQUE` (`feedback_id`,`author_id`),
+  KEY `author_id` (`author_id`),
+  KEY `feedback_id` (`feedback_id`),
+  CONSTRAINT `feedback_author_ibfk_12` FOREIGN KEY (`feedback_id`) REFERENCES `feedback` (`feedback_id`),
+  CONSTRAINT `feedback_author_ibfk_7` FOREIGN KEY (`author_id`) REFERENCES `person` (`person_id`) ON DELETE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 DROP TABLE IF EXISTS `gossip`;
 CREATE TABLE `gossip` (
@@ -158,27 +193,5 @@ CREATE TABLE `trial_pass` (
   CONSTRAINT `trial_pass_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `person` (`person_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
-DROP TABLE IF EXISTS `feedback`;
-CREATE TABLE `feedback` (
-  `feedback_id` int(11) NOT NULL AUTO_INCREMENT,
-  `feedback` text NOT NULL,
-  `inserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`feedback_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-DROP TABLE IF EXISTS `feedback_author`;
-CREATE TABLE `feedback_author` (
-  `feedback_author_id` int(11) NOT NULL AUTO_INCREMENT,
-  `feedback_id` int(11) NOT NULL,
-  `author_id` int(11) NOT NULL,
-  PRIMARY KEY (`feedback_author_id`),
-  UNIQUE KEY `feedback_author_UNIQUE` (`feedback_id`,`author_id`),
-  KEY `author_id` (`author_id`),
-  KEY `feedback_id` (`feedback_id`),
-  CONSTRAINT `feedback_author_ibfk_12` FOREIGN KEY (`feedback_id`) REFERENCES `feedback` (`feedback_id`),
-  CONSTRAINT `feedback_author_ibfk_7` FOREIGN KEY (`author_id`) REFERENCES `person` (`person_id`) ON DELETE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
--- 2015-04-25 08:13:49
+-- 2017-02-19 02:53:43

@@ -21,7 +21,7 @@ session:
 
 services:
         - App\Model\Authentication\PasswordAuthenticator
-        - App\Model\Authentication\TokenAuthenticator(%auth.tokenAuth%)
+        - App\Model\Authentication\TokenAuthenticator
         - App\Model\GossipToken\GossipToken
         - App\Model\GossipManager
         - App\Model\TrialManager

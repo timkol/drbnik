@@ -1,0 +1,94 @@
+{* Latte template *}
+{block title}{/block}
+{block menu}{/block}
+
+{block content}
+<span id="gossip"><span id="final"></span><span id="interim"></span></span>
+{/block}
+
+{block scripts}
+{include parent}
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+var socket = io("http://localhost:3000");
+socket.emit('login-path', { host: {$host}, path: {link Sign:intermediate}});
+socket.on('login', function(msg) {
+    var temporaryToken = msg['temporary-token'];
+    var lang = msg['lang'];
+    $.get({$basePath}+"/sign/in?token="+temporaryToken, function(data, status) {
+        if(status === "success") {
+            setUp();
+            recognition.lang = lang;
+            recognition.start();
+        }
+    });
+});
+
+socket.on('logout', function(msg) {    
+    recognition.stop();
+    recognition.lang = '';
+    $.post({link Gossip:add}, { gossip: final_transcript }, function(data, status) {
+        tearDown((status === 'success'));
+    });
+});
+    
+var setUp = function() {    
+    
+};
+
+var tearDown = function(success) {    
+    
+};
+</script>
+<script type="text/javascript">
+var final_elem = document.getElementById('gossip');
+var final_transcript = '';
+
+var final_span = document.getElementById('final');
+var interim_span = document.getElementById('interim');
+
+if (!('webkitSpeechRecognition' in window)) {
+    window.alert("SR not supported.");
+} else {
+    var recognition = new webkitSpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = 'cs-CZ';//sk-SK
+
+    recognition.onerror = function(event) {
+        alert("Chyba: "+event.error);
+    };
+
+    recognition.onresult = function(event) {
+        var interim_transcript = '';
+        if (typeof(event.results) == 'undefined') {
+            recognition.stop();
+            alert("chyba");
+            return;
+        }
+        for (var i = event.resultIndex; i < event.results.length; ++i) {
+            if (event.results[i].isFinal) {
+                final_transcript += event.results[i][0].transcript;
+            } else {
+                interim_transcript += event.results[i][0].transcript;
+            }
+        }
+        final_transcript = capitalize(final_transcript);
+        final_span.innerHTML = linebreak(final_transcript);
+        interim_span.innerHTML = linebreak(interim_transcript);
+    };
+    //recognition.start();
+}
+
+var two_line = /\n\n/g;
+var one_line = /\n/g;
+function linebreak(s) {
+    return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
+}
+
+var first_char = /\S/;
+function capitalize(s) {
+    return s.replace(first_char, function(m) { return m.toUpperCase(); });
+}
+</script>
+{/block}

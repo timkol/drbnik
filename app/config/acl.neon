@@ -20,18 +20,19 @@ services:
             - addResource(audio) #add, delete, list, play, stop, addCron, listCron, playMic, stopMic
 
             #ACL
-            - allow(guest, gossip, displayForm)
+            #- allow(guest, gossip, displayForm)
             #- allow(guest, gossip, add, [@tokenAssertion, 'isCooledDown'])
-            - allow(guest, gossip, add)
-            - allow(authenticated, person, editMyself)
-            - allow(authenticated, gossip, displayForm)
+            #- allow(guest, gossip, add)
+            #- allow(authenticated, person, editMyself)
+            #- allow(authenticated, gossip, displayForm)
             - allow(authenticated, gossip, add, [@gossipPoolAssertion, 'canAdd'])
 
-            - allow(guest, feedback, displayForm)
-            - allow(guest, feedback, add)
+            #- allow(guest, feedback, displayForm)
+            #- allow(guest, feedback, add)
 
             - allow(org, gossip)
             - allow(org, feedback)
             - allow(org, trial)
             - allow(org, audio)
+            - allow(org, person, editMyself)
             - allow(admin, Nette\Security\Permission::ALL)

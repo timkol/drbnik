@@ -131,5 +131,24 @@ class GossipPresenter extends BasePresenter
         }
         $this->sendResponse(new JsonResponse($gossipArr, 'application/json; charset=utf-8'));
     }
+    
+    public function renderProphet() {
+        $this->template->host = $this->getHttpRequest()->getUrl()->host;
+    }
+
+    public function actionAdd() {
+        if (!$this->getUser()->isAllowed('gossip', 'add')) {
+            $this->error('Nemáte oprávnění k přidání drbu.', \Nette\Http\IResponse::S403_FORBIDDEN);
+        }
+        
+        $gossip = $this->request->getPost('gossip');
+        $person = $this->database->table('person')->where(':login.login_id', $this->user->id)->fetch();
+        $personId = ($person) ? $person->person_id : null;
+        
+        $this->model->add($gossip, [$personId], []);
+        //$this->getHttpRequest()->getUrl()->host;
+        $this->user->logout(true);
+        $this->redirect("Sign:in");
+    }
 
 }
