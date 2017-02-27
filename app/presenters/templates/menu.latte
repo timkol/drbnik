@@ -37,6 +37,14 @@
                 <li n:if="$user->isAllowed('audio','listCron')"><a n:href="Audio:crontab">Naplánované úlohy</a></li>
               </ul>
             </li>
+            <li n:if="$user->isAllowed('teamPoints','add') || $user->isAllowed('teamPoints','listChanges') || $user->isAllowed('teamPoints','show')" class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Body <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li n:if="$user->isAllowed('teamPoints','add')"><a n:href="TeamPoints:add">Udělit</a></li>
+                <li n:if="$user->isAllowed('teamPoints','show')"><a n:href="TeamPoints:show">Aktuální stav</a></li>
+                <li n:if="$user->isAllowed('teamPoints','listChanges')"><a n:href="TeamPoints:list">Přehled změn</a></li>
+              </ul>
+            </li>
             {*<li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">

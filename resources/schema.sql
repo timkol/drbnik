@@ -2,6 +2,8 @@
 
 SET NAMES utf8;
 SET time_zone = '+00:00';
+SET foreign_key_checks = 0;
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 DROP TABLE IF EXISTS `auth_token`;
 CREATE TABLE `auth_token` (
@@ -127,6 +129,7 @@ CREATE TABLE `login` (
 DROP TABLE IF EXISTS `person`;
 CREATE TABLE `person` (
   `person_id` int(11) NOT NULL AUTO_INCREMENT,
+  `team_id` int(11) DEFAULT NULL,
   `family_name` varchar(255) COLLATE utf8_czech_ci NOT NULL COMMENT 'Příjmení (nebo více příjmení oddělených jednou mezerou)',
   `other_name` varchar(255) COLLATE utf8_czech_ci NOT NULL COMMENT 'Křestní jména, von, de atd., oddělená jednou mezerou',
   `display_name` varchar(511) COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'zobrazované jméno, liší-li se od <other_name> <family_name>',
@@ -134,7 +137,9 @@ CREATE TABLE `person` (
   `person_type` enum('pako','org','visit') CHARACTER SET utf8 NOT NULL DEFAULT 'pako',
   `lang` enum('cs-CZ','sk-SK') CHARACTER SET utf8 NOT NULL DEFAULT 'cs-CZ',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`person_id`)
+  PRIMARY KEY (`person_id`),
+  KEY `team_id` (`team_id`),
+  CONSTRAINT `person_ibfk_1` FOREIGN KEY (`team_id`) REFERENCES `team` (`team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci COMMENT='řazení: <family_name><other_name>, zobrazení <other_name> <f';
 
 
@@ -154,6 +159,32 @@ CREATE TABLE `status` (
   `description` text,
   PRIMARY KEY (`status_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `team`;
+CREATE TABLE `team` (
+  `team_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) COLLATE utf8_czech_ci NOT NULL,
+  PRIMARY KEY (`team_id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+
+
+DROP TABLE IF EXISTS `team_points`;
+CREATE TABLE `team_points` (
+  `team_points_id` int(11) NOT NULL AUTO_INCREMENT,
+  `team_id` int(11) NOT NULL,
+  `org_id` int(11) NOT NULL COMMENT 'autorizovaná osoba',
+  `points_change` int(11) NOT NULL,
+  `note` varchar(100) COLLATE utf8_czech_ci DEFAULT NULL,
+  `inserted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `active` tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`team_points_id`),
+  KEY `team_id` (`team_id`),
+  KEY `org_id` (`org_id`),
+  CONSTRAINT `team_points_ibfk_1` FOREIGN KEY (`team_id`) REFERENCES `team` (`team_id`),
+  CONSTRAINT `team_points_ibfk_3` FOREIGN KEY (`org_id`) REFERENCES `login` (`login_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
 DROP TABLE IF EXISTS `token`;
@@ -195,4 +226,4 @@ CREATE TABLE `trial_pass` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 
--- 2017-02-19 19:41:47
+-- 2017-02-27 12:04:02

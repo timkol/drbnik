@@ -18,6 +18,7 @@ services:
             - addResource(trial)
             - addResource(feedback)
             - addResource(audio) #add, delete, list, play, stop, addCron, listCron, playMic, stopMic
+            - addResource(teamPoints) #add, delete, listChanges, show
 
             #ACL
             #- allow(guest, gossip, displayForm)
@@ -35,4 +36,5 @@ services:
             - allow(org, trial)
             - allow(org, audio)
             - allow(org, person, editMyself)
+            - allow(org, teamPoints)
             - allow(admin, Nette\Security\Permission::ALL)

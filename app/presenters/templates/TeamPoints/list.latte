@@ -1,0 +1,24 @@
+{* Latte template *}
+
+{block content}
+<h1 n:block=title>Seznam změn bodů</h1>
+<table class="table table-hover table-striped table-responsive">
+    <tr>
+        <th>Tým</th>
+        <th>Změna bodů</th>
+        <th>Poznámka</th>
+        <th>Vloženo</th>
+        <th>Vložil</th>
+        <th>Akce</th>
+    <tr>
+{foreach $pointChanges as $change}
+    <tr n:class="(!$change->active) ? text-muted">
+        <td>{$change->team->name}</td>
+        <td>{$change->points_change}</td>
+        <td>{$change->note}</td>
+        <td>{$change->inserted}</td>
+        <td>{$change->ref('login', 'org_id')->login}</td>
+        <td>{if $change->active}<a class="btn btn-danger" role="button" href="{link delete $change->id}">Smazat</a>{/if}</td>
+    <tr>
+{/foreach}
+</table>

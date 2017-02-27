@@ -28,12 +28,14 @@ services:
         - App\Model\FeedbackManager
         - App\Model\AudioManager
         - App\Model\AnimatedGossip\AnimatedGossipFactory
+        - App\Model\TeamPointsManager
         - App\Forms\SignFormFactory
         - App\Forms\PersonFormFactory
         - App\Forms\GossipFormFactory
         - App\Forms\TrialFormFactory
         - App\Forms\FeedbackFormFactory
         - App\Forms\AudioFormFactory
+        - App\Forms\TeamPointsFormFactory
         router: App\RouterFactory::createRouter
 
 includes:

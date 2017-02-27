@@ -1,0 +1,12 @@
+{* Latte template *}
+
+{block content}
+<h1 n:block=title>Body týmů</h1>
+<table>
+{foreach $points as $entry}
+    <tr>
+        <td>{$entry->team}</td>
+        <td>{$entry->points}</td>
+    </tr>
+{/foreach}
+</table>
