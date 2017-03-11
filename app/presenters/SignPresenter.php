@@ -56,10 +56,14 @@ class SignPresenter extends BasePresenter
          */
         public function actionIntermediate() {
             $permanentToken = $this->request->getPost('token');
+            $returnToken = ($this->request->getPost('returnToken') === 'false') ? false : true;
             $this->tokenAuthenticator->login($permanentToken);
-            $temporaryToken = $this->tokenAuthenticator->addToken(TokenAuthenticator::TYPE_PHP);
+            $temporaryToken = $returnToken ? $this->tokenAuthenticator->addToken(TokenAuthenticator::TYPE_PHP) : null;
             $lang = $this->user->getIdentity()->lang;
-            $this->sendResponse(new JsonResponse(['temporary-token' => $temporaryToken, 'lang' => $lang], 'application/json; charset=utf-8'));
+            $this->sendResponse(new JsonResponse([
+                'temporary-token' => $temporaryToken, 
+                'lang' => $lang, 
+                'roles' => $this->user->roles], 'application/json; charset=utf-8'));
         }
 
 }

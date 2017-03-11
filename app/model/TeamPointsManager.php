@@ -49,7 +49,14 @@ class TeamPointsManager extends Nette\Object
         return $this->database->table('v_team_points');
     }
     
-    private function redrawPoints() {
+    public function redrawPoints() {
         //TODO
+        //$fp = stream_socket_client("tcp://www.example.com:80", $errno, $errstr, 30);
+        //fwrite($fp, "GET / HTTP/1.0\r\nHost: www.example.com\r\nAccept: */*\r\n\r\n");
+        $gryffindor = $this->getCurrent()->where('team', 'gryffindor')->points;
+        $hufflepuff = $this->getCurrent()->where('team', 'hufflepuff')->points;
+        $ravenclaw = $this->getCurrent()->where('team', 'ravenclaw')->points;
+        $slytherin = $this->getCurrent()->where('team', 'slytherin')->points;
+        file_get_contents("http://localhost:3000/points?gryffindor=".$gryffindor."&hufflepuff=".$hufflepuff."&ravenclaw=".$ravenclaw."&slytherin=".$slytherin);
     }
 }

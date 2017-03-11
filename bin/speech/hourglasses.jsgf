@@ -1,0 +1,8 @@
+#JSGF V1.0;
+grammar hourglasses;
+public <out> = <pricteni> | <odecteni>;
+<pricteni> = <cislo> bodu pro <kolej>;
+<odecteni> = odebiram <cislo> bodu <koleji>;
+<kolej> = nebelvir | mrzimor | havraspar | zmijozel;
+<koleji> = nebelviru | mrzimoru | havrasparu | zmijozelu;
+<cislo> = pet | deset | dvacet;

@@ -1,0 +1,2 @@
+#pocketsphinx_continuous -infile $1 -jsgf ./hourglasses.jsgf -dict ./kouzla.dict -hmm ./acoustic-model -logfn $1.log
+pocketsphinx_continuous -infile $1 -jsgf ./hourglasses.jsgf -dict ./kouzla.dict -logfn $1.log

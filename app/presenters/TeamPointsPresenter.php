@@ -26,6 +26,28 @@ class TeamPointsPresenter extends BasePresenter
         }
     }
     
+    public function actionRefresh() {
+        if($this->getHttpRequest()->getRemoteAddress() !== '127.0.0.1') {
+            $this->error('Nemáte oprávnění k refreshi bodů.', \Nette\Http\IResponse::S403_FORBIDDEN);
+        }
+        $this->manager->redrawPoints();
+        $this->sendJson([]);
+    }
+    
+    public function actionLocalAdd() {
+        if (!$this->getUser()->isAllowed('teamPoints', 'add')) {
+            $this->error('Nemáte oprávnění ke změně bodů.', \Nette\Http\IResponse::S403_FORBIDDEN);
+        }
+        $team = $this->request->getPost('team');
+        $pointsChange = $this->request->getPost('pointsChange');
+        $note = $this->request->getPost('note');
+        
+        $teamId = $this->database->table('team')->where('name', $team)->team_id;
+        
+        $this->manager->add($teamId, $pointsChange, $note);
+        $this->sendJson([]);
+    }
+
     public function actionDelete($id) {
         if (!$this->getUser()->isAllowed('teamPoints', 'delete')) {
             $this->error('Nemáte oprávnění ke změně bodů.', \Nette\Http\IResponse::S403_FORBIDDEN);
