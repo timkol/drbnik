@@ -2,50 +2,32 @@ var app = require('express')(); //TODO unnecessary
 var http = require('http');
 var server = http.Server(app);
 var io = require('socket.io')(server);
-var querystring = require('querystring');
+var TokenAuthenticator = require('./token-authenticator');
+var SerialCommunicator = require('./serial-communicator');
 
-var stdin = process.openStdin();
+var port = new SerialCommunicator('/dev/ttyACM0');
 
 io.on('connection', function(socket){
     console.log('a user connected');
-    var requestOptions = {
-        host: '',
-        path: '',
-        method: 'POST',
-        headers: {"Content-type": "application/x-www-form-urlencoded", "Accept": "application/json"}
-    };
+    
+    var authenticator = new TokenAuthenticator();
     socket.on('login-path', function(msg) {
-        requestOptions['host'] = msg['host'];
-        requestOptions['path'] = msg['path'];
+        authenticator.setHost(msg['host']);
+        authenticator.setLoginPath(msg['path']);
     });
-
-    stdin.addListener("data", function(d) {
-    // note:  d is an object, and when converted to a string it will
-    // end with a linefeed.  so we (rather crudely) account for that  
-    // with toString() and then trim() 
-        console.log("you entered: [" + 
-            d.toString().trim() + "]");
-        msg = d.toString().trim();
-        if(msg === 'l') {
-            var postData = querystring.stringify({token: "sem_prijde_token_z_NFC"});
-            var req = http.request(requestOptions, function(response) {
-                var str = '';
-                response.on('data', function (chunk) {
-                    str += chunk;
-                });
-                response.on('end', function () {
-                    socket.emit('login', JSON.parse(str));
-                });
-            });
-            req.write(postData);
-            req.end();
-        }
-        else if(msg === 'k') {
-            socket.emit('logout');
-        }
+    
+    port.on('connect', function(token) {
+        authenticator.login(token, true, function(jsonUser, cookie) {
+            socket.emit('login', jsonUser);
+        }, function() {
+            console.log("Unauthorized access: "+token);
+        });
+    });
+    port.on('disconnect', function() {
+        socket.emit('logout');
     });
 });
 
-server.listen(3000, function(){
-    console.log('listening on *:3000');
+server.listen(3000, 'localhost', function(){
+    console.log('listening on 127.0.0.1:3000');
 });
