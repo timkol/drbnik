@@ -1,9 +1,80 @@
 {* Latte template *}
 {block title}{/block}
+{block head}
+<style type="text/css">
+html,body{
+    margin:0;
+    height:100%;
+    overflow:hidden;
+}
+#fireplace-img,#fireplace { 
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: 100%;
+    height: auto;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+#fireplace-img {
+    z-index: -100;
+}
+#fireplace {
+    z-index: -50;
+    display: none;
+}
+/*
+#fireplace-img{
+    min-height:100%;
+    min-width:100%;
+    height:auto;
+    width:100%;
+    position:absolute;
+    top:-100%; bottom:-100%;
+    left:-100%; right:-100%;
+    margin:auto;
+}
+*/
+#quill-wrapper{
+    position: relative;
+}
+#quill{
+    height: 100px;
+    position: absolute;
+}
+#gossip{
+    position: absolute;
+    top: 43%;
+    left: 37%;
+    height: 25%;
+    width: 25%;
+    /*border: 1px solid black;*/
+    font-family: JaneAusten;
+    font-size: 12pt;
+    color: black;
+    display: none;
+}
+#interim{
+    color: #101010;
+}
+</style>
+{/block}
 {block menu}{/block}
 
 {block content}
-<span id="gossip"><span id="final"></span><span id="interim"></span></span>
+<img id="fireplace-img" src="{$basePath}/images/krb-static.png">
+<video muted loop poster="{$basePath}/images/krb-static.png" id="fireplace">
+    <source src="{$basePath}/images/krb.mp4" type="video/mp4">
+</video>
+<div id="gossip">
+    <span id="final"></span>
+    <span id="interim"></span>
+    <span id="quill-wrapper"><img id="quill" src="{$basePath}/images/quill.png"/></span>
+</div>
 {/block}
 
 {block scripts}
@@ -32,15 +103,21 @@ socket.on('logout', function(msg) {
     });
 });
     
-var setUp = function() {    
-    
+var setUp = function() {
+    video.play();
+    video.style.display = 'block';
+    final_elem.style.display = 'block';
 };
 
-var tearDown = function(success) {    
-    
+var tearDown = function(success) {
+    video.style.display = 'none';
+    final_elem.style.display = 'none';
+    video.pause();
 };
 </script>
 <script type="text/javascript">
+var video = document.getElementById('fireplace');
+var quill = document.getElementById('quill');
 var final_elem = document.getElementById('gossip');
 var final_transcript = '';
 
@@ -76,6 +153,7 @@ if (!('webkitSpeechRecognition' in window)) {
         final_transcript = capitalize(final_transcript);
         final_span.innerHTML = linebreak(final_transcript);
         interim_span.innerHTML = linebreak(interim_transcript);
+        quill.style.top = Math.floor(random()*100)+"%";
     };
     //recognition.start();
 }
