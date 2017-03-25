@@ -133,7 +133,7 @@ class GossipPresenter extends BasePresenter
     }
     
     public function renderProphet() {
-        $this->template->host = $this->getHttpRequest()->getUrl()->host;
+        $this->template->host = $this->getHttpRequest()->getUrl()->scheme.'://'.$this->getHttpRequest()->getUrl()->host;
     }
 
     public function actionAdd() {
