@@ -8,12 +8,12 @@ class SerialCommunicator extends EventEmitter {
             parser: SerialPort.parsers.readline('\n')
         });
         
-        this.port.on('open', function (){
+        this.port.on('open', () => {
             console.log("Serial connection opened");
             this.emit('open');
         });
         
-        this.port.on('data', function(d) {
+        this.port.on('data', (d) => {
             var data = d.split(';');
             switch (data[0]) {
                 case 'connect':

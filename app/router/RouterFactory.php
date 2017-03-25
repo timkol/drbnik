@@ -19,6 +19,7 @@ class RouterFactory
 	 */
 	public static function createRouter()
 	{
+                Route::$defaultFlags = Route::SECURED;
 		$router = new RouteList();
 		$router[] = new Route('<presenter>/<action>[/<id>]', 'Gossip:default');
 		return $router;

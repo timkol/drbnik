@@ -60,7 +60,7 @@ class PointsManager {
     }
     
     refreshPoints(successCallback, errorCallback) {
-        var reqOptions = this.requestOptions.slice(); //hard copy
+        var reqOptions = JSON.parse(JSON.stringify(this.requestOptions)); //hard copy
         reqOptions['path'] = this.refreshPath;
         reqOptions['method'] = 'GET';
         //reqOptions['headers']['Cookie'] = cookie;
@@ -120,7 +120,7 @@ class PointsManager {
     
     _addPoints(team, pointsChange, note, cookie, successCallback, unauthorizedCallback) {
         var postData = querystring.stringify({team: team, pointsChange: pointsChange, note: note});
-        var reqOptions = this.requestOptions.slice(); //hard copy
+        var reqOptions = JSON.parse(JSON.stringify(this.requestOptions)); //hard copy
         reqOptions['path'] = this.pointsPath;
         reqOptions['headers']['Cookie'] = cookie;
         var req = http.request(reqOptions, function(response) {
