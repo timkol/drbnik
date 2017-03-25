@@ -141,7 +141,7 @@ if (!('webkitSpeechRecognition' in window)) {
         final_transcript = capitalize(final_transcript);
         final_span.innerHTML = linebreak(final_transcript);
         interim_span.innerHTML = linebreak(interim_transcript);
-        quill.style.top = Math.floor(random()*100)+"%";
+        quill.style.top = Math.floor(Math.random()*100)+"%";
     };
 }
 
