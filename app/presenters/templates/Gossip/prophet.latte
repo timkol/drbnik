@@ -67,7 +67,7 @@ html,body{
 
 {block scripts}
 {include parent}
-<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+<script src="{$basePath}/js/socket.io.js"></script>
 <script type="text/javascript">
 var socket = io("http://localhost:3000");
 socket.emit('login-path', { host: {$host}, path: {link Sign:intermediate}});
