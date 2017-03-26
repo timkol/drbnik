@@ -53,10 +53,11 @@ class TeamPointsManager extends Nette\Object
         //TODO
         //$fp = stream_socket_client("tcp://www.example.com:80", $errno, $errstr, 30);
         //fwrite($fp, "GET / HTTP/1.0\r\nHost: www.example.com\r\nAccept: */*\r\n\r\n");
-        $gryffindor = $this->getCurrent()->where('team', 'Nebelvír')->points;
-        $hufflepuff = $this->getCurrent()->where('team', 'Mrzimor')->points;
-        $ravenclaw = $this->getCurrent()->where('team', 'Havraspár')->points;
-        $slytherin = $this->getCurrent()->where('team', 'Zmijozel')->points;
+        $points = $this->getCurrent()->fetchPairs('team', 'points');
+        $gryffindor = $points['Nebelvír'];
+        $hufflepuff = $points['Mrzimor'];
+        $ravenclaw = $points['Havraspár'];
+        $slytherin = $points['Zmijozel'];
         file_get_contents("http://localhost:3000/points?gryffindor=".$gryffindor."&hufflepuff=".$hufflepuff."&ravenclaw=".$ravenclaw."&slytherin=".$slytherin);
     }
 }
