@@ -27,9 +27,9 @@ class TeamPointsPresenter extends BasePresenter
     }
     
     public function actionRefresh() {
-        if($this->getHttpRequest()->getRemoteAddress() !== '127.0.0.1') {
-            $this->error('Nemáte oprávnění k refreshi bodů.', \Nette\Http\IResponse::S403_FORBIDDEN);
-        }
+        //if($this->getHttpRequest()->getRemoteAddress() !== '127.0.0.1') {
+        //    $this->error('Nemáte oprávnění k refreshi bodů.', \Nette\Http\IResponse::S403_FORBIDDEN);
+        //}
         $this->manager->redrawPoints();
         $this->sendJson([]);
     }

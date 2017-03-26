@@ -21,7 +21,9 @@ points.setHost(HOST);
 points.setPointsPath(POINTS_PATH);
 
 port.on('open', function () {
-    points.refreshPoints();
+    points.refreshPoints(() => {}, () => {
+        console.log("refresh error");
+    });
 });
 
 port.on('connect', function(token) {
