@@ -32,6 +32,16 @@ class SerialCommunicator extends EventEmitter {
         });
     }
     
+/**
+* 1 -> points (int,int,int)
+* 2 -> randomize
+* 3 -> derandomize
+* 4 -> demo
+* 5 -> blink (int,int,int)
+* 6 -> lumos (int,int,int)
+* 7 -> nox
+*/
+    
     connectionSucceeded() {
         this._send('connect', 'success');
     }
@@ -53,11 +63,11 @@ class SerialCommunicator extends EventEmitter {
      * @returns {undefined}
      */
     updatePoints(gryffindor, hufflepuff, ravenclaw, slytherin) {
-        this._send('points', gryffindor + "|" + hufflepuff + "|" + ravenclaw + "|" + slytherin);
+        this._send('1', gryffindor + "|" + hufflepuff + "|" + ravenclaw + "|" + slytherin);
     }
     
-    spellFlash(color) {
-        this._send('flashLED', color);
+    spellFlash(R, G, B) {
+        this._send('5', R + "|" + G + "|" + B);
     }
     
     _send(command, param) {
