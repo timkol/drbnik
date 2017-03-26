@@ -4,6 +4,8 @@ var SerialCommunicator = require('./serial-communicator');
 var EffectManager = require('./effect-manager');
 var PointsManager = require('./points-manager');
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 var port = new SerialCommunicator('/dev/ttyACM0');
 var authenticator = new TokenAuthenticator();
 var points = new PointsManager();

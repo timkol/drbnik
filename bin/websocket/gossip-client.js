@@ -5,6 +5,8 @@ var io = require('socket.io')(server);
 var TokenAuthenticator = require('./token-authenticator');
 var SerialCommunicator = require('./serial-communicator');
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 var port = new SerialCommunicator('/dev/ttyACM0');
 
 io.on('connection', function(socket){

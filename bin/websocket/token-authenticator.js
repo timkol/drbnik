@@ -1,8 +1,6 @@
 var http = require('https');
 var querystring = require('querystring');
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-
 class TokenAuthenticator {
     constructor() {
         this.requestOptions = {
