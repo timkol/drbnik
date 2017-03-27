@@ -1,4 +1,4 @@
-const LEDS_IN_STRIP = 100;
+const LEDS_IN_STRIP = 120;
 
 class EffectManager {
     
@@ -12,10 +12,18 @@ class EffectManager {
     }
     
     updatePoints(gryffindor, hufflepuff, ravenclaw, slytherin) {
-        var gryffindor_led = Math.min(gryffindor, LEDS_IN_STRIP);
-        var hufflepuff_led = Math.min(hufflepuff, LEDS_IN_STRIP);
-        var ravenclaw_led = Math.min(ravenclaw, LEDS_IN_STRIP);
-        var slytherin_led = Math.min(slytherin, LEDS_IN_STRIP);
+        var categories = [100, 200, 500, 1000, 2000, 5000];
+        var max = Math.max(Math.abs(gryffindor), Math.abs(hufflepuff), Math.max(ravenclaw), Math.max(slytherin));
+        var edge = 0;
+        var i = 0;
+        do{
+            edge = categories[i++];
+        } while(edge < max);
+        
+        var gryffindor_led = Math.floor(gryffindor/edge*LEDS_IN_STRIP);
+        var hufflepuff_led = Math.floor(gryffindor/edge*LEDS_IN_STRIP);
+        var ravenclaw_led = Math.floor(gryffindor/edge*LEDS_IN_STRIP);
+        var slytherin_led = Math.floor(gryffindor/edge*LEDS_IN_STRIP);
         this.port.updatePoints(gryffindor_led, hufflepuff_led, ravenclaw_led, slytherin_led);
     }
     

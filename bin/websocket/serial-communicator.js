@@ -71,7 +71,7 @@ class SerialCommunicator extends EventEmitter {
     }
     
     _send(command, param) {
-        data = command + ';' + param + "\n";
+        var data = command + ';' + param + "\n";
         this.port.write(data, function (err) {
             console.log("Serial error: "+err);
         });

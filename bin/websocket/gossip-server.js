@@ -14,14 +14,18 @@ var effects = new EffectManager(port);
 const HOST = 'localhost';
 const LOGIN_PATH = '/sign/intermediate';
 const POINTS_PATH = '/team-points/local-add';
+const REFRESH_PATH = '/team-points/refresh';
 
 authenticator.setHost(HOST);
 authenticator.setLoginPath(LOGIN_PATH);
 points.setHost(HOST);
 points.setPointsPath(POINTS_PATH);
+points.setRefreshPath(REFRESH_PATH);
 
 port.on('open', function () {
-    points.refreshPoints(() => {}, () => {
+    points.refreshPoints(() => {
+        console.log("refresh success");
+    }, () => {
         console.log("refresh error");
     });
 });
