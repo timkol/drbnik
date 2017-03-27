@@ -21,9 +21,9 @@ class EffectManager {
         } while(edge < max);
         
         var gryffindor_led = Math.floor(gryffindor/edge*LEDS_IN_STRIP);
-        var hufflepuff_led = Math.floor(gryffindor/edge*LEDS_IN_STRIP);
-        var ravenclaw_led = Math.floor(gryffindor/edge*LEDS_IN_STRIP);
-        var slytherin_led = Math.floor(gryffindor/edge*LEDS_IN_STRIP);
+        var hufflepuff_led = Math.floor(hufflepuff/edge*LEDS_IN_STRIP);
+        var ravenclaw_led = Math.floor(ravenclaw/edge*LEDS_IN_STRIP);
+        var slytherin_led = Math.floor(slytherin/edge*LEDS_IN_STRIP);
         this.port.updatePoints(gryffindor_led, hufflepuff_led, ravenclaw_led, slytherin_led);
     }
     
