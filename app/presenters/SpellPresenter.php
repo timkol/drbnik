@@ -23,7 +23,8 @@ class SpellPresenter extends BasePresenter
             'nox' => 'Nox',
             'avada_kedavra' => 'Avada kedavra',
             'tarantallegra' => 'Tarantallegra',
-            'finite_tarantallegra' => 'Finite tarantallegra'
+            'finite_tarantallegra' => 'Finite tarantallegra',
+            'demo' => 'Blues'
         ];
     }
     

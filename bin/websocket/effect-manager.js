@@ -44,6 +44,9 @@ class EffectManager {
             case "finite_tarantallegra":
                 this.port.finiteTarantallegra();
                 break;
+            case "demo":
+                this.port.demo();
+                break;
             default:
                 console.log("Error: Spell "+spell+" unrecognized.");
                 return;

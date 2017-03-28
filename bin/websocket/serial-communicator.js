@@ -86,6 +86,10 @@ class SerialCommunicator extends EventEmitter {
         this._send('3', "");
     }
     
+    demo() {
+        this._send('4', "");
+    }
+    
     _send(command, param) {
         var data = command + ';' + param + "\n";
         this.port.write(data, function (err) {
