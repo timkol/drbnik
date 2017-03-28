@@ -13,7 +13,7 @@ class EffectManager {
     
     updatePoints(gryffindor, hufflepuff, ravenclaw, slytherin) {
         var categories = [100, 200, 500, 1000, 2000, 5000];
-        var max = Math.max(Math.abs(gryffindor), Math.abs(hufflepuff), Math.max(ravenclaw), Math.max(slytherin));
+        var max = Math.max(Math.abs(gryffindor), Math.abs(hufflepuff), Math.abs(ravenclaw), Math.abs(slytherin));
         var edge = 0;
         var i = 0;
         do{
