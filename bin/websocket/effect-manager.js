@@ -35,13 +35,13 @@ class EffectManager {
             case "nox":
                 this.port.nox();
                 break;
-            case "avada kedavra":
+            case "avada_kedavra":
                 this.port.spellFlash("0", "255", "0");
                 break;
             case "tarantallegra":
                 this.port.tarantallegra();
                 break;
-            case "finite tarantallegra":
+            case "finite_tarantallegra":
                 this.port.finiteTarantallegra();
                 break;
             default:
