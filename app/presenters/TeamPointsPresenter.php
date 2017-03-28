@@ -45,6 +45,7 @@ class TeamPointsPresenter extends BasePresenter
         $teamId = $this->database->table('team')->where('name', $team)->team_id;
         
         $this->manager->add($teamId, $pointsChange, $note);
+        $this->user->logout(true);
         $this->sendJson([]);
     }
 

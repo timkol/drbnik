@@ -70,6 +70,14 @@ class SerialCommunicator extends EventEmitter {
         this._send('5', R + "|" + G + "|" + B);
     }
     
+    lumos(R,G,B) {
+        this._send('6', R + "|" + G + "|" + B);
+    }
+    
+    nox() {
+        this._send('7', "");
+    }
+    
     _send(command, param) {
         var data = command + ';' + param + "\n";
         this.port.write(data, function (err) {

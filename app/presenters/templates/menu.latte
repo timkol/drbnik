@@ -45,6 +45,7 @@
                 <li n:if="$user->isAllowed('teamPoints','listChanges')"><a n:href="TeamPoints:list">Přehled změn</a></li>
               </ul>
             </li>
+            <li n:if="$user->isAllowed('spell','list')" {if $presenter->isLinkCurrent('Spell:list')}class="active"{/if}><a n:href="Spell:list">Kouzla</a></li>
             {*<li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">

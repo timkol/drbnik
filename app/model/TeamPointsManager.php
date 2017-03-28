@@ -31,6 +31,7 @@ class TeamPointsManager extends Nette\Object
         $this->database->table('team_points')->wherePrimary($id)->update(array(
             'active' => 0
         ));
+        $this->redrawPoints();
     }
 
     /**

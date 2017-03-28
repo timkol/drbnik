@@ -1,0 +1,8 @@
+{* Latte template *}
+
+{block content}
+<h1 n:block=title>Seznam kouzel</h1>
+
+{foreach $spells as $spell => $name}
+<a class="btn btn-danger" role="button" href="{link cast $spell}">{$name}</a><br>
+{/foreach}

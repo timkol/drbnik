@@ -19,6 +19,7 @@ services:
             - addResource(feedback)
             - addResource(audio) #add, delete, list, play, stop, addCron, listCron, playMic, stopMic
             - addResource(teamPoints) #add, delete, listChanges, show
+            - addResource(spell) #list, cast
 
             #ACL
             #- allow(guest, gossip, displayForm)
@@ -38,4 +39,5 @@ services:
             #- allow(org, audio)
             - allow(org, person, editMyself)
             - allow(org, teamPoints)
+            - allow(org, spell)
             - allow(admin, Nette\Security\Permission::ALL)

@@ -27,7 +27,23 @@ class EffectManager {
         this.port.updatePoints(gryffindor_led, hufflepuff_led, ravenclaw_led, slytherin_led);
     }
     
-
+    castSpell(spell) {
+        switch(spell) {
+            case "lumos":
+                this.port.lumos("255", "255", "255");
+                break;
+            case "nox":
+                this.port.nox();
+                break;
+            case "avada kedavra":
+                this.port.spellFlash("0", "255", "0");
+                break;
+            default:
+                console.log("Error: Spell "+spell+" unrecognized.");
+                return;
+        }
+        console.log("Spell "+spell+" cast.");
+    }
 }
 
 /**

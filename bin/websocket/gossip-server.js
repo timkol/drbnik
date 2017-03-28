@@ -6,7 +6,7 @@ var PointsManager = require('./points-manager');
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-var port = new SerialCommunicator('/dev/ttyACM0');
+var port = new SerialCommunicator('/dev/ttyUSB0');
 var authenticator = new TokenAuthenticator();
 var points = new PointsManager();
 var effects = new EffectManager(port);
@@ -61,6 +61,11 @@ app.get('/points', function (req, res) {
     var slytherin = Number(req.query.slytherin);
     effects.updatePoints(gryffindor, hufflepuff, ravenclaw, slytherin);
     res.send("Points updated");
+});
+
+app.get('/spell', function (req, res) {
+    effects.castSpell(req.query.name);
+    res.send("Spell "+req.query.name+" cast.");
 });
 
 app.listen(3000, 'localhost', function(){
