@@ -21,7 +21,9 @@ class SpellPresenter extends BasePresenter
         $this->template->spells = [
             'lumos' => 'Lumos',
             'nox' => 'Nox',
-            'avada kedavra' => 'Avada kedavra'
+            'avada kedavra' => 'Avada kedavra',
+            'tarantallegra' => 'Tarantallegra',
+            'finite tarantallegra' => 'Finite tarantallegra'
         ];
     }
     

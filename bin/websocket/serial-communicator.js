@@ -78,6 +78,14 @@ class SerialCommunicator extends EventEmitter {
         this._send('7', "");
     }
     
+    tarantallegra() {
+        this._send('2', "");
+    }
+    
+    finiteTarantallegra() {
+        this._send('3', "");
+    }
+    
     _send(command, param) {
         var data = command + ';' + param + "\n";
         this.port.write(data, function (err) {

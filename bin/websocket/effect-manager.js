@@ -38,6 +38,12 @@ class EffectManager {
             case "avada kedavra":
                 this.port.spellFlash("0", "255", "0");
                 break;
+            case "tarantallegra":
+                this.port.tarantallegra();
+                break;
+            case "finite tarantallegra":
+                this.port.finiteTarantallegra();
+                break;
             default:
                 console.log("Error: Spell "+spell+" unrecognized.");
                 return;
