@@ -18,7 +18,7 @@
         <td>{$change->note}</td>
         <td>{$change->inserted}</td>
         <td>{$change->ref('login', 'org_id')->login}</td>
-        <td>{if $change->active}<a class="btn btn-danger" role="button" href="{link delete $change->team_points_id}">Smazat</a>{/if}</td>
+        <td>{if ($change->active == 1)}<a class="btn btn-danger" role="button" href="{link delete $change->team_points_id}">Smazat</a>{/if}</td>
     <tr>
 {/foreach}
 </table>

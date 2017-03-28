@@ -28,6 +28,9 @@ class TeamPointsManager extends Nette\Object
     }
     
     public function delete($id) {
+        if($this->database->table('team_points')->get($id)->active > 1) {
+            return;
+        }
         $this->database->table('team_points')->wherePrimary($id)->update(array(
             'active' => 0
         ));
