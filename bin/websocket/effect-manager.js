@@ -32,6 +32,9 @@ class EffectManager {
             case "lumos":
                 this.port.lumos("255", "255", "255");
                 break;
+            case "avis":
+                this.port.lumos("0", "0", "255");
+                break;
             case "nox":
                 this.port.nox();
                 break;

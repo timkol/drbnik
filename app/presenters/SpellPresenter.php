@@ -24,7 +24,8 @@ class SpellPresenter extends BasePresenter
             'avada_kedavra' => 'Avada kedavra',
             'tarantallegra' => 'Tarantallegra',
             'finite_tarantallegra' => 'Finite tarantallegra',
-            'demo' => 'Blues'
+            'demo' => 'Blues',
+            'avis' => 'Avis'
         ];
     }
     
