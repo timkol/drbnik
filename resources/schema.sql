@@ -136,6 +136,7 @@ CREATE TABLE `person` (
   `gender` enum('M','F') CHARACTER SET utf8 NOT NULL,
   `person_type` enum('pako','org','visit') CHARACTER SET utf8 NOT NULL DEFAULT 'pako',
   `lang` enum('cs-CZ','sk-SK') CHARACTER SET utf8 NOT NULL DEFAULT 'cs-CZ',
+  `foto_filename` varchar(50) COLLATE utf8_czech_ci DEFAULT NULL COMMENT 'jméno souboru s fotkou (bez cesty)',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`person_id`),
   KEY `team_id` (`team_id`),

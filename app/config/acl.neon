@@ -13,7 +13,7 @@ services:
 
             #Resources
             - addResource(gossip) #displayForm, add, edit, approve, show
-            - addResource(person) #add, edit, editMyself
+            - addResource(person) #add, edit, editMyself, show
             - addResource(stats) #show
             - addResource(trial)
             - addResource(feedback)
@@ -28,7 +28,7 @@ services:
             #- allow(authenticated, person, editMyself)
             #- allow(authenticated, gossip, displayForm)
             #- allow(authenticated, gossip, add, [@gossipPoolAssertion, 'canAdd'])
-            - allow(authenticated, gossip, add)
+            #- allow(authenticated, gossip, add)
 
             #- allow(guest, feedback, displayForm)
             #- allow(guest, feedback, add)
@@ -38,6 +38,7 @@ services:
             #- allow(org, trial)
             #- allow(org, audio)
             - allow(org, person, editMyself)
-            - allow(org, teamPoints)
-            - allow(org, spell)
+            - allow(org, person, show)
+            #- allow(org, teamPoints)
+            #- allow(org, spell)
             - allow(admin, Nette\Security\Permission::ALL)

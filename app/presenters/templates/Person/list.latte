@@ -1,0 +1,19 @@
+{* Latte template *}
+{block content}
+<div class="container">
+{block title}
+<h1>Seznam lidí</h1>
+{/block}
+{foreach $persons as $person}
+    <div class="row">
+    <a n:href="show $person->person_id">
+        <div class="col-sm-1">
+            <img class="img-responsive img-thumbnail" src="{$basePath}{$fotoPath}/{$person->foto_filename}">
+        </div>
+        <div class="col-sm-2">
+            {$person->other_name} {$person->family_name}
+        </div>
+    </a>
+    </div>
+{/foreach}
+</div>

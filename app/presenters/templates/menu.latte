@@ -19,6 +19,7 @@
             <li {if $presenter->isLinkCurrent('Person:editMyself')}class="active"{/if}><a n:href="Person:editMyself">Upravit údaje</a></li>
             <li n:if="$user->isAllowed('gossip','approve')" {if $presenter->isLinkCurrent('Gossip:approve')}class="active"{/if}><a n:href="Gossip:approve">Schvalovat nesprávné chování</a></li>
             <li n:if="$user->isAllowed('person','add')" {if $presenter->isLinkCurrent('Person:add')}class="active"{/if}><a n:href="Person:add">Přidat osoby</a></li>
+            <li n:if="$user->isAllowed('person','show')" {if $presenter->isLinkCurrent('Person:list')}class="active"{/if}><a n:href="Person:list">Seznam osob</a></li>
             <li n:if="$user->isAllowed('stats','show')" class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Statistiky <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">

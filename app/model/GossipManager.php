@@ -111,7 +111,7 @@ class GossipManager extends Nette\Object
      * @param string|null $status
      * @return \Nette\Database\ResultSet
      */
-    public function getByVictim($victim_id = null, $status = null, $modified = null) {
+    public function getByVictim($victim_id, $status, $modified = null) {
         if($modified === null) {
             $modified = date('Y-m-d H:i:s');
         }

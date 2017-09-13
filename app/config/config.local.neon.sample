@@ -1,4 +1,6 @@
 parameters:
+    foto:
+        fotoPath: /images/foto
     audio:
         audioDir: %appDir%/../audio
         cronFileName: /tmp/crontabs-fks-audio
