@@ -115,7 +115,6 @@ class GossipFormFactory extends BaseFormFactory
         $form = parent::create();
         $options = array(
             'new' => 'Ponechat neschválený',
-            'top' => 'Top drb',
             'approved' => 'Schválit',
             'rejected' => 'Zamítnout',
             'duplicit' => 'Duplicitní',
