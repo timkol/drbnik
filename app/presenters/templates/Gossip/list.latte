@@ -1,21 +1,44 @@
 {* Latte template *}
 
 {block content}
-Nové drby:<br>
-<table>
+<div class="container">
+    <div class="row">
+        <h2>Nové drby</h2>
+    </div>
 {foreach $gossips['new'] as $gossip}
-    <tr><td>{$gossip->gossip}</td><td>{$gossip->inserted}</td></tr>
+    <div class="row">
+        <div class="col-md-4">
+            {$gossip->gossip}
+        </div>
+        <div class="col-md-4">
+            {$gossip->inserted}
+        </div>
+    </div>
 {/foreach}
-</table>
-Odmítnuté drby:<br>
-<table>
+    <div class="row">
+        <h2>Odmítnuté drby</h2>
+    </div>
 {foreach $gossips['rejected'] as $gossip}
-    <tr><td>{$gossip->gossip}</td><td>{$gossip->inserted}</td></tr>
+    <div class="row">
+        <div class="col-md-4">
+            {$gossip->gossip}
+        </div>
+        <div class="col-md-4">
+            {$gossip->inserted}
+        </div>
+    </div>
 {/foreach}
-</table>
-Schválené drby:<br>
-<table>
+    <div class="row">
+        <h2>Schválené drby</h2>
+    </div>
 {foreach $gossips['approved'] as $gossip}
-    <tr><td>{$gossip->gossip}</td><td>{$gossip->inserted}</td></tr>
+    <div class="row">
+        <div class="col-md-4">
+            {$gossip->gossip}
+        </div>
+        <div class="col-md-4">
+            {$gossip->inserted}
+        </div>
+    </div>
 {/foreach}
-</table>
+</div>
